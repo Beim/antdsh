@@ -1,10 +1,9 @@
 # antdsh
 
 
-
 **环境要求**
 
-- nodejs
+- Node.js 10.15.0
 
 
 
