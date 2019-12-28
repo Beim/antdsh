@@ -28,8 +28,7 @@ class MenuHeader extends Component {
               onClick={this.handleClickMenu}
             >
               <Menu.Item key="1">Sh V1.1</Menu.Item>
-              {/*<Menu.Item key="2">模式</Menu.Item>*/}
-              {/*<Menu.Item key="3">资源</Menu.Item>*/}
+              <Menu.Item key="2">API</Menu.Item>
             </Menu>
           </Col>
           <Col span={4}>
@@ -48,10 +47,7 @@ class MenuHeader extends Component {
       window.location = '/main/home';
     }
     else if (key === '2') {
-      window.location = '/schema';
-    }
-    else if (key === '3') {
-      window.location = APP_CONFIG.neo4jBrowserUrl;
+      window.location = 'https://github.com/Beim/Beim.github.io/issues/10';
     }
   };
 }
