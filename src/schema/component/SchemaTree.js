@@ -21,12 +21,11 @@ class SchemaTree extends Component {
    */
   constructor(props) {
     super(props);
-    let schemaJson = {};
-    if (props['schemaOwl'] !== undefined) {
-      schemaJson = this.transOwlToJson(props['schemaOwl']);
-    }
+    let schemaJson = this.transOwlToJson(props['schemaOwl']);
+    let relativeUris = this.parseUriFromOwl(props['schemaOwl']);
     this.state = {
-      schemaJson,
+      schemaJson,  // json 格式的schema，用于UI CRUD
+      relativeUris,  // 记录class/objectproperty/datatypeproperty 的relativeUri 集合，用于检查重名（如类和关系的uri 重复）
       expandAll: props['expandAll'] !== undefined ? props['expandAll'] : false,
       editBtnVisible: props['editable'] !== undefined ? props['editable'] : false,
 
@@ -64,15 +63,19 @@ class SchemaTree extends Component {
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
+    let nextState = {};
     if (this.props['schemaOwl'] === undefined && nextProps['schemaOwl'] !== undefined) {
       const schemaJson = this.transOwlToJson(nextProps['schemaOwl']);
       if (this.props.submitSchemaJson !== undefined) {
         this.props.submitSchemaJson(schemaJson);
       }
-      this.setState({
-        schemaJson,
-      })
+      nextState['schemaJson'] = schemaJson;
     }
+    if (nextProps['schemaOwl'] !== undefined) {
+      const relativeUris = this.parseUriFromOwl(nextProps['schemaOwl']);
+      nextState['relativeUris'] = relativeUris;
+    }
+    this.setState(nextState);
   }
 
   render() {
@@ -211,8 +214,13 @@ class SchemaTree extends Component {
     const newObjectPropertyDomainUri = this.state.newObjectPropertyDomainUri ? this.state.newObjectPropertyDomainUri.trim() : '#';
     const newORangeUri = this.state.newORangeUri ? this.state.newORangeUri.trim() : '#';
     const schemaJson = JSON.parse(JSON.stringify(this.state.schemaJson));
+    const relativeUris = this.state.relativeUris;
     if (newObjectPropertyUri === '#' || newObjectPropertyDomainUri === '#' || newORangeUri === '#') {
       return message.info('值不能为空')
+    }
+    if (relativeUris[TYPES.CLASS].has(newObjectPropertyUri)
+      || relativeUris[TYPES.DATATYPE_PROPERTY].has(newObjectPropertyUri)) {
+      return message.info(`${newObjectPropertyUri} 已存在`);
     }
     if (!this.addPropertyToSchemaJson(newObjectPropertyUri, newObjectPropertyDomainUri, KEYS.OBJECT_PROPERTY, schemaJson))
       return;
@@ -243,8 +251,13 @@ class SchemaTree extends Component {
     const newDatatypePropertyDomainUri = this.state.newDatatypePropertyDomainUri ? this.state.newDatatypePropertyDomainUri.trim() : "#";
     const newDRangeUri = this.state.newDRangeUri ? this.state.newDRangeUri.trim() : 'xsd:';
     const schemaJson = JSON.parse(JSON.stringify(this.state.schemaJson));
+    const relativeUris = this.state.relativeUris;
     if (newDatatypePropertyUri === '#' || newDatatypePropertyDomainUri === '#' || newDRangeUri === 'xsd:') {
       return message.info('值不能为空')
+    }
+    if (relativeUris[TYPES.OBJECT_PROPERTY].has(newDatatypePropertyUri)
+      || relativeUris[TYPES.CLASS].has(newDatatypePropertyUri)) {
+      return message.info(`${newDatatypePropertyUri} 已存在`);
     }
     if (!this.addPropertyToSchemaJson(newDatatypePropertyUri, newDatatypePropertyDomainUri, KEYS.DATATYPE_PROPERTY, schemaJson))
       return;
@@ -294,10 +307,15 @@ class SchemaTree extends Component {
   handleNewClassModalOk = (e) => {
     const schemaJson = this.state.schemaJson;
     const newClassUri = this.state.newClassUri ? this.state.newClassUri.trim() : '#';
+    const relativeUris = this.state.relativeUris;
     if (newClassUri === '#') {
       return message.info('值不能为空')
     }
     if (newClassUri in schemaJson) {
+      return message.info(`${newClassUri} 已存在`);
+    }
+    if (relativeUris[TYPES.OBJECT_PROPERTY].has(newClassUri)
+      || relativeUris[TYPES.DATATYPE_PROPERTY].has(newClassUri)) {
       return message.info(`${newClassUri} 已存在`);
     }
     schemaJson[newClassUri] = {};
@@ -400,8 +418,35 @@ class SchemaTree extends Component {
     })
   };
 
+  /**
+   * 从owl 中获取relativeUri
+   * 返回 { 'owl:Class': (#abc, ...), 'owl:DatatypeProperty': (#def, ...), 'owl:ObjectProperty': (#ghi, ...) }
+   * @param owl
+   */
+  parseUriFromOwl(owl) {
+    const retrieveRelativeUri = (uri) => {
+      const re = new RegExp(`.*(#.*)`);
+      const result = uri.match(re);
+      return result[1];
+    };
+    let uris = {};
+    uris[TYPES.CLASS] = new Set();
+    uris[TYPES.DATATYPE_PROPERTY] = new Set();
+    uris[TYPES.OBJECT_PROPERTY] = new Set();
+    if (owl === undefined) {
+      return uris;
+    }
+    owl[KEYS.GRAPH].forEach((item, idx) => {
+      const relativeUri = retrieveRelativeUri(item[KEYS.ID]);
+      uris[item[KEYS.TYPE]].add(relativeUri);
+    });
+    return uris;
+  }
 
   transOwlToJson(owl) {
+    if (owl === undefined) {
+      return {};
+    }
     const retrieveRelativeUri = (uri) => {
       const re = new RegExp(`.*(#.*)`);
       const result = uri.match(re);
