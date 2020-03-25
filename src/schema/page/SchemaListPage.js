@@ -66,7 +66,7 @@ class SchemaInfoTabel extends Component {
   render() {
     const columns = [
       {
-        title: '模式名',
+        title: '模板名',
         dataIndex: 'sname',
         key: 'sname',
         sorter: (a, b) => {
@@ -180,7 +180,7 @@ class SchemaListPage extends Component {
         <MenuHeader defaultSelectedKey="2" />
         <Content style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.MAIN + `?gid=${this.state.gid}`}>模式</a></Breadcrumb.Item>
+            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.MAIN + `?gid=${this.state.gid}`}>模板</a></Breadcrumb.Item>
             <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.LIST + `?gid=${this.state.gid}`}>列表</a></Breadcrumb.Item>
           </Breadcrumb>
           <div className={commonStyles.pageBackground}>

@@ -121,7 +121,7 @@ class ViewConfigFullCard extends Component {
     super(props);
     this.columns = [
       {
-        title: '关系合成模式',
+        title: '关系合成模板',
         dataIndex: 'combine',
         render: (text, record) => {
           return text;
@@ -287,7 +287,7 @@ class ViewConfigFinishCard extends Component {
   };
 
   componentDidMount() {
-    message.success('关系模式生成成功');
+    message.success('关系模板生成成功');
     this.getConfigText();
   }
 
@@ -360,7 +360,7 @@ class ViewConfigPage extends Component {
         <MenuHeader defaultSelectedKey="2" />
         <Content style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>模式</Breadcrumb.Item>
+            <Breadcrumb.Item>模板</Breadcrumb.Item>
           </Breadcrumb>
           <div className={commonStyles.pageBackground}>
             <div className={commonStyles.page}>

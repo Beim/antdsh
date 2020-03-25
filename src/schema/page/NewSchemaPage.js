@@ -112,15 +112,15 @@ class NewSchemaPage extends Component {
         <MenuHeader defaultSelectedKey="2" />
         <Content style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.MAIN + `?gid=${this.state.gid}`}>模式</a></Breadcrumb.Item>
+            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.MAIN + `?gid=${this.state.gid}`}>模板</a></Breadcrumb.Item>
             <Breadcrumb.Item>添加</Breadcrumb.Item>
           </Breadcrumb>
           <div className={commonStyles.pageBackground}>
             <div className={commonStyles.page}>
               <div className={commonStyles.content}>
                 <div className={commonStyles.card}>
-                  <span style={{fontSize: "18px"}}>模式名:&nbsp;</span>
-                  <Input placeholder={"请输入模式名"}
+                  <span style={{fontSize: "18px"}}>模板名:&nbsp;</span>
+                  <Input placeholder={"请输入模板名"}
                          name={"sname"}
                          value={this.state.sname}
                          style={{
@@ -162,7 +162,7 @@ class NewSchemaPage extends Component {
       return message.info('请添加类');
     };
     if (sname === "") {
-      return message.info("请输入模式名");
+      return message.info("请输入模板名");
     }
     const response = await schemaService.newSchema(gid, owl, "JSON-LD", sname);
     if (!response.ok) {

@@ -115,7 +115,7 @@ class AdminSchemaVerifyPage extends Component {
   getQuery = () => {
     let search = this.props.location.search;
     if (search === "") {
-      message.info('模式名未指定');
+      message.info('模板名未指定');
       return;
     }
     search = search.split('?')[1];
@@ -188,7 +188,7 @@ class AdminSchemaVerifyPage extends Component {
         <MenuHeader defaultSelectedKey="2" />
         <Content style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.ADMIN_MAIN}>模式</a></Breadcrumb.Item>
+            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.ADMIN_MAIN}>模板</a></Breadcrumb.Item>
             <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.ADMIN_LIST}>管理</a></Breadcrumb.Item>
             <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.ADMIN_VERIFY}>审核</a></Breadcrumb.Item>
           </Breadcrumb>
@@ -196,7 +196,7 @@ class AdminSchemaVerifyPage extends Component {
             <div className={commonStyles.page}>
               <div className={commonStyles.content}>
                 <div className={commonStyles.card}>
-                  <span style={{fontSize: "18px"}}>{`模式名:  ${this.state.sname}`}</span>
+                  <span style={{fontSize: "18px"}}>{`模板名:  ${this.state.sname}`}</span>
                   <Button onClick={this.handleMerge} style={{marginLeft: '10px'}}>确认融合</Button>
                   <Button onClick={this.handleChangeMatchTable} style={{marginLeft: '10px'}}>保存修改</Button>
                 </div>
@@ -205,7 +205,7 @@ class AdminSchemaVerifyPage extends Component {
                   <MatchTable  handleSelectedRows={this.handleSelectedRows} dataSource={dataSource}></MatchTable>
                 </div>
                 <div className={commonStyles.card}>
-                  <div className={commonStyles.cardTitle}>用户模式</div>
+                  <div className={commonStyles.cardTitle}>用户模板</div>
                   <SchemaTree schemaOwl={this.state.owl} editable={false} submitOwl={this.handleOwlChange} ></SchemaTree>
                 </div>
               </div>

@@ -42,7 +42,7 @@ class ViewSchemaPage extends Component {
         <MenuHeader defaultSelectedKey="2" />
         <Content style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.MAIN + `?gid=${this.state.gid}`}>模式</a></Breadcrumb.Item>
+            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.MAIN + `?gid=${this.state.gid}`}>模板</a></Breadcrumb.Item>
             <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.LIST + `?gid=${this.state.gid}`}>列表</a></Breadcrumb.Item>
             <Breadcrumb.Item>查看</Breadcrumb.Item>
           </Breadcrumb>
@@ -50,7 +50,7 @@ class ViewSchemaPage extends Component {
             <div className={commonStyles.page}>
               <div className={commonStyles.content}>
                 <div className={commonStyles.card}>
-                  <span style={{fontSize: "18px"}}>{`模式名:  ${this.state.sname}`}</span>
+                  <span style={{fontSize: "18px"}}>{`模板名:  ${this.state.sname}`}</span>
                 </div>
                 <div className={commonStyles.card}>
                   <Row>

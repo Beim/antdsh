@@ -8,14 +8,14 @@ const { Header } = Layout;
 
 /**
  * props: {
- *   defaultSelectedKey: String // required 1, 2  默认选择的菜单
+ *   defaultSelectedKey: String // required  默认选择的菜单
  * }
  */
 class MenuHeader extends Component {
 
   render() {
-    // const defaultSelectedKey = this.props.defaultSelectedKey || '1';
-    const defaultSelectedKey = '1';
+    const defaultSelectedKey = this.props.defaultSelectedKey || '1';
+    // const defaultSelectedKey = '1';
     return (
       <Header>
         <Row>
@@ -28,7 +28,8 @@ class MenuHeader extends Component {
               onClick={this.handleClickMenu}
             >
               <Menu.Item key="1">Sh V1.1</Menu.Item>
-              <Menu.Item key="2">API</Menu.Item>
+              <Menu.Item key="api">API</Menu.Item>
+              <Menu.Item key="console">控制台</Menu.Item>
             </Menu>
           </Col>
           <Col span={4}>
@@ -46,8 +47,11 @@ class MenuHeader extends Component {
     if (key === '1') {
       window.location = '/main/home';
     }
-    else if (key === '2') {
+    else if (key === 'api') {
       window.location = 'https://github.com/Beim/Beim.github.io/issues/10';
+    }
+    else if (key === "console") {
+      window.location = "/user/console";
     }
   };
 }

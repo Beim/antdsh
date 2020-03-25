@@ -49,8 +49,8 @@ embeddingService.getAvailableModelsParamByGid = async (gspaceId, modelname) => {
   return await response.json();
 };
 
-embeddingService.postTrain = async (gid, modelname) => {
-  const response = await fetch(`${defaultUrlPrefix}/embed/train?gid=${gid}&modelName=${modelname}`, {
+embeddingService.postTrain = async (gid, modelname, serviceId) => {
+  const response = await fetch(`${defaultUrlPrefix}/embed/train?gid=${gid}&modelName=${modelname}&serviceId=${serviceId}`, {
     method: 'POST',
     credentials: 'include',
     headers: {
@@ -60,6 +60,21 @@ embeddingService.postTrain = async (gid, modelname) => {
       gid,
       modelname,
     }),
+  });
+  if (!response.ok) {
+    message.error(JSON.stringify({
+      url: response.url,
+      status: response.status,
+    }));
+    return null;
+  }
+  return await response.json();
+};
+
+embeddingService.getTrainServiceInfo = async () => {
+  const response = await fetch(`${defaultUrlPrefix}/embed/train/serviceinfo`, {
+    method: 'GET',
+    credentials: 'include',
   });
   if (!response.ok) {
     message.error(JSON.stringify({

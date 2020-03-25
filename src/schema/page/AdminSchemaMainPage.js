@@ -15,7 +15,7 @@ class AdminSchemaMainPage extends Component {
       href: SCHEMA_CONST.HREF.ADMIN_LIST,
       imgSrc: "/images/menu.png",
       title: "列表",
-      desc: "查看模式列表",
+      desc: "查看模板列表",
     };
     return (
       <Layout className="layout" style={{ height: "100%" }}>
@@ -28,7 +28,7 @@ class AdminSchemaMainPage extends Component {
             <div className={commonStyles.page}>
               <div className={commonStyles.content}>
                 <div className={commonStyles.card}>
-                  <div className={commonStyles.cardTitle}>模式管理</div>
+                  <div className={commonStyles.cardTitle}>模板管理</div>
                   <div>
                     <CommonProductCard data={listSchemaCardData} />
                   </div>

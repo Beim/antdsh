@@ -118,8 +118,8 @@ class MainHomePage extends Component {
             pid: 1,
             href: `/schema?gid=${gspaceId}`,
             imgSrc: "/images/R.png",
-            title: '模式',
-            desc: '模式',
+            title: '模板',
+            desc: '模板',
           },
           {
             pid: 2,

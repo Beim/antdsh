@@ -74,7 +74,7 @@ class EditSchemaPage extends Component {
         <MenuHeader defaultSelectedKey="2" />
         <Content style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.MAIN + `?gid=${this.state.gid}`}>模式</a></Breadcrumb.Item>
+            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.MAIN + `?gid=${this.state.gid}`}>模板</a></Breadcrumb.Item>
             <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.LIST + `?gid=${this.state.gid}`}>列表</a></Breadcrumb.Item>
             <Breadcrumb.Item>编辑</Breadcrumb.Item>
           </Breadcrumb>
@@ -82,7 +82,7 @@ class EditSchemaPage extends Component {
             <div className={commonStyles.page}>
               <div className={commonStyles.content}>
                 <div className={commonStyles.card}>
-                  <span style={{fontSize: "18px"}}>{`模式名:  ${this.state.sname}`}</span>
+                  <span style={{fontSize: "18px"}}>{`模板名:  ${this.state.sname}`}</span>
                   <Button onClick={this.handleSave} style={{marginLeft: '10px'}}>保存</Button>
                 </div>
                 <div className={commonStyles.card}>
