@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Layout, Breadcrumb, message, Modal, Input, Table} from 'antd';
+import {Layout, Breadcrumb, message, Modal, Input, Table, Button } from 'antd';
 import commonStyles from '../../common/css/common.module.scss'
 import MenuHeader from '../../common/component/MenuHeader';
 import commonUtil from "../../common/utils/commonUtil";
@@ -33,6 +33,15 @@ class DataUsageTable extends Component {
         dataIndex: 'nodeCount',
         render: (text, record) => {
           return text;
+        }
+      },
+      {
+        title: '操作',
+        dataIndex: 'id',
+        render: (text, record) => {
+          return (
+            <a>删除图空间</a>
+          )
         }
       }
     ];

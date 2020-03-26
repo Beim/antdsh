@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Breadcrumb, message, Row, Col } from 'antd';
+import {Layout, Breadcrumb, message, Row, Col, Button} from 'antd';
 import Remarkable from 'remarkable';
 
 import MenuHeader from '../../common/component/MenuHeader';
@@ -63,6 +63,7 @@ class ViewSchemaPage extends Component {
                       </SchemaTree>
                     </Col>
                     <Col span={12}>
+                      <Button>资源文件上传(csv)</Button>
                       <div
                         dangerouslySetInnerHTML={this.getRawMarkup()}
                       />
