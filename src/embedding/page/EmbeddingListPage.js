@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Layout, Breadcrumb, message, Table, Spin, Modal} from 'antd';
+import Remarkable from 'remarkable';
 
 import MenuHeader from '../../common/component/MenuHeader';
 import commonStyles from '../../common/css/common.module.scss';
@@ -164,6 +165,182 @@ class EmbeddingListTable extends Component {
 
   renderApiModal = () => {
     const { apiGid, apiModelname } = this.state;
+    let str = `
+### 接口：预测头实体
+* 地址：/embed/predict/head
+* 类型：GET
+* 状态码：200
+* 简介：需要登录态
+* Rap地址：[http://rap2.taobao.org/repository/editor?id=240565&mod=349196&itf=1423589](http://rap2.taobao.org/repository/editor?id=240565&mod=349196&itf=1423589)
+* 请求接口格式：
+
+\`\`\`
+├─ gid: Number (图空间id)
+├─ modelName: String (模型名称)
+├─ tailId: String (尾实体id)
+├─ relType: String (关系类型)
+└─ topk: Number 
+
+\`\`\`
+
+* 返回接口格式：
+
+\`\`\`
+├─ data: Array (topk 结果): Array (topk 结果)
+├─ oper: String (接口操作)
+├─ succ: Boolean (成功)
+├─ code: Number (DEFAULT_SUCC_CODE=1, DEFAULT_FAIL_CODE=-1)
+└─ msg: String (DEFAULT_SUCC_MSG='ok', DEFAULT_FAIL_MSG='fail')
+
+\`\`\`
+
+---
+
+### 接口：预测尾实体
+* 地址：/embed/predict/tail
+* 类型：GET
+* 状态码：200
+* 简介：需要登录态
+* Rap地址：[http://rap2.taobao.org/repository/editor?id=240565&mod=349196&itf=1423583](http://rap2.taobao.org/repository/editor?id=240565&mod=349196&itf=1423583)
+* 请求接口格式：
+
+\`\`\`
+├─ gid: Number (图空间id)
+├─ modelName: String (模型名称)
+├─ headId: String (头实体id)
+├─ relType: String (关系类型)
+└─ topk: Number 
+
+\`\`\`
+
+* 返回接口格式：
+
+\`\`\`
+├─ oper: String (接口操作)
+├─ succ: Boolean (成功)
+├─ code: Number (DEFAULT_SUCC_CODE=1, DEFAULT_FAIL_CODE=-1)
+├─ msg: String (DEFAULT_SUCC_MSG='ok', DEFAULT_FAIL_MSG='fail')
+└─ data: Array (topk 结果): Array (topk 结果)
+
+\`\`\`
+
+---
+
+### 接口：预测关系
+* 地址：/embed/predict/relation
+* 类型：GET
+* 状态码：200
+* 简介：需要登录态
+* Rap地址：[http://rap2.taobao.org/repository/editor?id=240565&mod=349196&itf=1423592](http://rap2.taobao.org/repository/editor?id=240565&mod=349196&itf=1423592)
+* 请求接口格式：
+
+\`\`\`
+├─ gid: Number (图空间id)
+├─ modelName: String (模型名称)
+├─ tailId: String (尾实体id)
+├─ headId: String (头实体id)
+└─ topk: Number 
+
+\`\`\`
+
+* 返回接口格式：
+
+\`\`\`
+├─ data: Array (topk 结果): Array (topk 结果)
+├─ oper: String (接口操作)
+├─ succ: Boolean (成功)
+├─ code: Number (DEFAULT_SUCC_CODE=1, DEFAULT_FAIL_CODE=-1)
+└─ msg: String (DEFAULT_SUCC_MSG='ok', DEFAULT_FAIL_MSG='fail')
+
+\`\`\`
+
+---
+
+### 接口：预测三元组
+* 地址：/embed/predict/triple
+* 类型：GET
+* 状态码：200
+* 简介：需要登录态
+* Rap地址：[http://rap2.taobao.org/repository/editor?id=240565&mod=349196&itf=1423597](http://rap2.taobao.org/repository/editor?id=240565&mod=349196&itf=1423597)
+* 请求接口格式：
+
+\`\`\`
+├─ gid: Number (图空间id)
+├─ modelName: String (模型名称)
+├─ tailId: String (尾实体id)
+├─ headId: String (头实体id)
+├─ relType: String (关系类型)
+└─ thresh: Number (阈值)
+
+\`\`\`
+
+* 返回接口格式：
+
+\`\`\`
+├─ data: Boolean (预测结果)
+├─ oper: String (接口操作)
+├─ succ: Boolean (成功)
+├─ code: Number (DEFAULT_SUCC_CODE=1, DEFAULT_FAIL_CODE=-1)
+└─ msg: String (DEFAULT_SUCC_MSG='ok', DEFAULT_FAIL_MSG='fail')
+
+\`\`\`
+
+---
+
+### 接口：获取实体嵌入
+* 地址：/embed/entity/embedding
+* 类型：GET
+* 状态码：200
+* 简介：需要登录态
+* Rap地址：[http://rap2.taobao.org/repository/editor?id=240565&mod=349196&itf=1423601](http://rap2.taobao.org/repository/editor?id=240565&mod=349196&itf=1423601)
+* 请求接口格式：
+
+\`\`\`
+├─ gid: Number (图空间id)
+├─ modelName: String (模型名称)
+└─ entId: String (实体id)
+
+\`\`\`
+
+* 返回接口格式：
+
+\`\`\`
+├─ data: Array (返回结果): Array (返回结果)
+├─ oper: String (接口操作)
+├─ succ: Boolean (成功)
+├─ code: Number (DEFAULT_SUCC_CODE=1, DEFAULT_FAIL_CODE=-1)
+└─ msg: String (DEFAULT_SUCC_MSG='ok', DEFAULT_FAIL_MSG='fail')
+
+\`\`\`
+
+---
+
+### 接口：获取关系嵌入
+* 地址：/embed/relation/embedding
+* 类型：GET
+* 状态码：200
+* 简介：需要登录态
+* Rap地址：[http://rap2.taobao.org/repository/editor?id=240565&mod=349196&itf=1423606](http://rap2.taobao.org/repository/editor?id=240565&mod=349196&itf=1423606)
+* 请求接口格式：
+
+\`\`\`
+├─ gid: Number (图空间id)
+├─ modelName: String (模型名称)
+└─ relType: String (关系id)
+
+\`\`\`
+
+* 返回接口格式：
+
+\`\`\`
+├─ data: Array (返回结果): Array (返回结果)
+├─ oper: String (接口操作)
+├─ succ: Boolean (成功)
+├─ code: Number (DEFAULT_SUCC_CODE=1, DEFAULT_FAIL_CODE=-1)
+└─ msg: String (DEFAULT_SUCC_MSG='ok', DEFAULT_FAIL_MSG='fail')
+
+\`\`\`
+    `;
     return (
       <Modal
         title={"查看接口"}
@@ -171,19 +348,27 @@ class EmbeddingListTable extends Component {
         onOk={this.handleApiModalCancle}
         onCancel={this.handleApiModalCancle}
       >
-        <div>{`预测头实体 [GET] ${defaultUrlPrefix}/embed/predict/head?gid=&modelName=&tailId=&relType=&topk=`}</div>
-        <br/>
-        <div>{`预测尾实体 [GET] ${defaultUrlPrefix}/embed/predict/tail?gid=&modelName=&headId=&relType=&topk=`}</div>
-        <br/>
-        <div>{`预测关系 [GET] ${defaultUrlPrefix}/embed/predict/relation?gid=&modelName=&headId=&tailId=&topk=`}</div>
-        <br/>
-        <div>{`预测三元组 [GET] ${defaultUrlPrefix}/embed/predict/triple?gid=&modelName=&headId=&tailId=&relation=&thresh=`}</div>
-        <br/>
-        <div>{`获取实体嵌入 [GET] ${defaultUrlPrefix}/embed/entity/embedding?gid=&modelName=&entId=`}</div>
-        <br/>
-        <div>{`获取关系嵌入 [GET] ${defaultUrlPrefix}/embed/relation/embedding?gid=&modelName=&relType=`}</div>
+        {/*<div>{`预测头实体 [GET] ${defaultUrlPrefix}/embed/predict/head?gid=&modelName=&tailId=&relType=&topk=`}</div>*/}
+        {/*<br/>*/}
+        {/*<div>{`预测尾实体 [GET] ${defaultUrlPrefix}/embed/predict/tail?gid=&modelName=&headId=&relType=&topk=`}</div>*/}
+        {/*<br/>*/}
+        {/*<div>{`预测关系 [GET] ${defaultUrlPrefix}/embed/predict/relation?gid=&modelName=&headId=&tailId=&topk=`}</div>*/}
+        {/*<br/>*/}
+        {/*<div>{`预测三元组 [GET] ${defaultUrlPrefix}/embed/predict/triple?gid=&modelName=&headId=&tailId=&relation=&thresh=`}</div>*/}
+        {/*<br/>*/}
+        {/*<div>{`获取实体嵌入 [GET] ${defaultUrlPrefix}/embed/entity/embedding?gid=&modelName=&entId=`}</div>*/}
+        {/*<br/>*/}
+        {/*<div>{`获取关系嵌入 [GET] ${defaultUrlPrefix}/embed/relation/embedding?gid=&modelName=&relType=`}</div>*/}
+        <div
+          dangerouslySetInnerHTML={this.getRawMarkup(str)}
+        />
       </Modal>
     )
+  };
+
+  getRawMarkup = (str) => {
+    const md = new Remarkable();
+    return { __html: md.render(str) };
   };
 
   renderServiceModal = () => {
