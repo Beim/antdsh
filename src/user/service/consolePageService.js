@@ -35,4 +35,19 @@ consolePageService.getNodeCount = async (gid) => {
   return await response.json();
 };
 
+consolePageService.removeGspace = async (gid) => {
+  const response = await fetch(`${defaultUrlPrefix}/gspace/remove?gspaceid=${gid}`, {
+    method: 'POST',
+    credentials: 'include',
+  });
+  if (!response.ok) {
+    message.error(JSON.stringify({
+      url: response.url,
+      status: response.status,
+    }));
+    return null;
+  }
+  return await response.json();
+};
+
 export default consolePageService;

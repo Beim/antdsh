@@ -7,6 +7,7 @@ import mainPageService from "../../common/service/mainPageService";
 import consolePageService from "../service/consolePageService";
 
 const { Content } = Layout;
+const { confirm } = Modal;
 
 
 class DataUsageTable extends Component {
@@ -40,7 +41,7 @@ class DataUsageTable extends Component {
         dataIndex: 'id',
         render: (text, record) => {
           return (
-            <a>删除图空间</a>
+            <a onClick={this.confirmDeleteGspace.bind(this, text)}>删除图空间</a>
           )
         }
       }
@@ -51,6 +52,18 @@ class DataUsageTable extends Component {
       </div>
     )
   }
+
+  confirmDeleteGspace = (gid) => {
+    return confirm({
+      title: '删除图空间',
+      content: '是否确认删除图空间？',
+      onOk: async () => {
+        await consolePageService.removeGspace(gid);
+        this.props.refresh();
+      },
+      onCancel() {}
+    })
+  };
 
 }
 
@@ -137,7 +150,7 @@ class UserConsolePage extends Component {
                 <div className={commonStyles.card}>
                   <div>
                     <div className={commonStyles.cardTitle}>图空间列表</div>
-                    <DataUsageTable data={gspaceInfoList}></DataUsageTable>
+                    <DataUsageTable data={gspaceInfoList} refresh={this.fetchDataAndSetState.bind(this)}></DataUsageTable>
                   </div>
                 </div>
 
