@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Layout, Breadcrumb, message, Row, Col, Button} from 'antd';
+import {Layout, Breadcrumb, message, Row, Col, Button, Upload} from 'antd';
 import Remarkable from 'remarkable';
 
 import MenuHeader from '../../common/component/MenuHeader';
@@ -14,6 +14,82 @@ import commonUtil from "../../common/utils/commonUtil";
 
 
 const { Content } = Layout;
+
+
+class ResourceUpload extends Component {
+  state = {
+    fileList: [],
+    uploading: false,
+  };
+
+  render() {
+    const { uploading, fileList } = this.state;
+    const props = {
+      multiple: true,
+      accept: ".csv",
+      onRemove: file => {
+        this.setState(state => {
+          const index = state.fileList.indexof(file);
+          const newFileList = state.fileList.slice();
+          newFileList.splice(index, 1);
+          return {
+            fileList: newFileList,
+          };
+        });
+      },
+      beforeUpload: file => {
+        this.setState(state => ({
+          fileList: [...state.fileList, file],
+        }));
+        return false;
+      },
+    };
+
+    return (
+      <div>
+        <Upload {...props}>
+          <Button>
+            选择文件
+          </Button>
+        </Upload>
+        <Button
+          type={"primary"}
+          onClick={this.handleUpload}
+          disabled={fileList.length === 0}
+          loading={uploading}
+          style={{ marginTop: 16 }}
+        >
+          { uploading ? '上传中' : '开始上传' }
+        </Button>
+      </div>
+    )
+  }
+
+  handleUpload = async () => {
+    const { sid, gid } = this.props;
+    const { fileList } = this.state;
+    const formData = new FormData();
+    fileList.forEach(file => {
+      formData.append('uploadFile', file);
+    });
+    this.setState({
+      uploading: true,
+    });
+    const response = await schemaService.uploadCsvResource(formData, sid, gid);
+    if (response.succ) {
+      this.setState({
+        fileList: [],
+        uploading: false,
+      });
+      message.success("上传成功");
+    } else {
+      this.setState({
+        uploading: false,
+      });
+      message.error("上传失败");
+    }
+  }
+}
 
 
 class ViewSchemaPage extends Component {
@@ -37,6 +113,7 @@ class ViewSchemaPage extends Component {
   }
 
   render() {
+    const { sid, gid } = this.state;
     return (
       <Layout className="layout" style={{ height: "100%" }}>
         <MenuHeader defaultSelectedKey="2" />
@@ -63,7 +140,7 @@ class ViewSchemaPage extends Component {
                       </SchemaTree>
                     </Col>
                     <Col span={12}>
-                      <Button>资源文件上传(csv)</Button>
+                      <ResourceUpload sid={sid} gid={gid} />
                       <div
                         dangerouslySetInnerHTML={this.getRawMarkup()}
                       />

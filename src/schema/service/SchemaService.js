@@ -1,4 +1,5 @@
 import appconfig from '../../appconfig';
+import {message} from "antd";
 
 const defaultUrlPrefix = appconfig['defaultServer']['host'];
 const SchemaService = {};
@@ -65,6 +66,22 @@ SchemaService.getSchemaInOwl = async (sid, gid) => {
     credentials: 'include',
   });
   return response;
+};
+
+SchemaService.uploadCsvResource = async (formData, sid, gid) => {
+  const response = await fetch(`${defaultUrlPrefix}/resource/csv/new?sid=${sid}&gid=${gid}`, {
+    method: 'POST',
+    credentials: 'include',
+    body: formData
+  });
+  if (!response.ok) {
+    message.error(JSON.stringify({
+      url: response.url,
+      status: response.status,
+    }));
+    return null;
+  }
+  return await response.json();
 };
 
 export default SchemaService;
