@@ -108,7 +108,6 @@ class EmbeddingListTable extends Component {
     commonUtil.download(relation2id, `${gid}_${modelname}_${updated}_relation2id.txt`);
   };
 
-  // Deprecated
   postTrainJob = async (gid, modelname, serviceId) => {
     const response = await embeddingService.postTrain(gid, modelname, serviceId);
     if (!response.succ) {
