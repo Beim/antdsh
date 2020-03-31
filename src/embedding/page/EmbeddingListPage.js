@@ -70,7 +70,7 @@ class EmbeddingListTable extends Component {
           <a onClick={this.showApiModal.bind(this, gid, modelname)}>查看接口</a>
           <span> | </span>
           {/*TODO 重新训练也需要选择服务节点 */}
-          <a onClick={this.postTrainJob.bind(this, gid, modelname)}>重新训练</a>
+          <a onClick={this.showServiceModal.bind(this, gid, modelname)}>重新训练</a>
           <span> | </span>
           <a onClick={this.exportParam.bind(this, gid, modelname)}>导出参数</a>
         </span>
@@ -108,6 +108,7 @@ class EmbeddingListTable extends Component {
     commonUtil.download(relation2id, `${gid}_${modelname}_${updated}_relation2id.txt`);
   };
 
+  // Deprecated
   postTrainJob = async (gid, modelname, serviceId) => {
     const response = await embeddingService.postTrain(gid, modelname, serviceId);
     if (!response.succ) {
