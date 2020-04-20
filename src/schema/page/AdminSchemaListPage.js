@@ -11,54 +11,6 @@ const { Content } = Layout;
 
 class SchemaInfoTabel extends Component {
 
-  onChange = (pagination, filters, sorter) => {
-
-  };
-
-  confirmMatch = async (sid) => {
-    const response = await schemaService.confirmMatch(sid);
-    if (!response.ok) {
-      message.error(JSON.stringify(response))
-      return;
-    }
-    const results = await response.json();
-    if (results.code !== RESULT.DEFAULT_SUCC_CODE) {
-      message.error(JSON.stringify(results));
-      return;
-    }
-    setTimeout(() => {
-      this.props.updateData();
-    }, 3000);
-  };
-
-  renderAction = (text, record) => {
-    const { sname, sid, gid, status } = record;
-    if (['0', '1', '3', '4'].includes(status)) {
-      return (
-        <span>
-          <a href={`/schema/view?sname=${sname}&sid=${sid}&gid=${gid}`}>查看</a>
-        </span>
-      )
-    }
-    else if (['2'].includes(status)) {
-      return (
-        <span>
-          <a href={`/schema/admin/verify?sname=${sname}&sid=${sid}&gid=${gid}`}>审核</a>
-        </span>
-      )
-    }
-    else if (['5'].includes(status)) {
-      return (
-        <span>
-          <a href={`/schema/view?sname=${sname}&sid=${sid}&gid=${gid}`}>查看</a>
-        </span>
-      )
-    }
-    else {
-      message.error(`status = ${status}`);
-    }
-  };
-
   render() {
     const columns = [
       {
@@ -167,6 +119,78 @@ class SchemaInfoTabel extends Component {
     )
 
   }
+
+  onChange = (pagination, filters, sorter) => {
+
+  };
+
+  confirmMatch = async (sid) => {
+    const response = await schemaService.confirmMatch(sid);
+    if (!response.ok) {
+      message.error(JSON.stringify(response))
+      return;
+    }
+    const results = await response.json();
+    if (results.code !== RESULT.DEFAULT_SUCC_CODE) {
+      message.error(JSON.stringify(results));
+      return;
+    }
+    setTimeout(() => {
+      this.props.updateData();
+    }, 3000);
+  };
+
+  renderAction = (text, record) => {
+    const { sname, sid, gid, status, owl } = record;
+    if (['0', '1', '3', '4'].includes(status)) {
+      return (
+        <span>
+          <a href={`/schema/view?sname=${sname}&sid=${sid}&gid=${gid}`}>查看</a>
+          {this.renderSaveSchemaBaseALabel(sid, owl)}
+        </span>
+      )
+    }
+    else if (['2'].includes(status)) {
+      return (
+        <span>
+          <a href={`/schema/admin/verify?sname=${sname}&sid=${sid}&gid=${gid}`}>审核</a>
+          {this.renderSaveSchemaBaseALabel(sid, owl)}
+        </span>
+      )
+    }
+    else if (['5'].includes(status)) {
+      return (
+        <span>
+          <a href={`/schema/view?sname=${sname}&sid=${sid}&gid=${gid}`}>查看</a>
+          {this.renderSaveSchemaBaseALabel(sid, owl)}
+        </span>
+      )
+    }
+    else {
+      message.error(`status = ${status}`);
+    }
+  };
+
+  renderSaveSchemaBaseALabel = (sid, owl) => {
+    if (!owl) return;
+    return (
+      <span>
+        <span> | </span>
+        <a onClick={this.addSchemaBase.bind(this, sid)}>保存至模板库</a>
+      </span>
+    )
+  };
+
+  addSchemaBase = async (sid) => {
+    const response = await adminSchemaService.postSchemaBase(sid);
+    if (response.succ) {
+      message.success("保存成功");
+    }
+    else {
+      message.error(`保存失败: ${JSON.stringify(response)}`);
+    }
+  }
+
 }
 
 class AdminSchemaListPage extends Component {
@@ -187,8 +211,8 @@ class AdminSchemaListPage extends Component {
         <MenuHeader defaultSelectedKey="2" />
         <Content style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.ADMIN_MAIN}>模板</a></Breadcrumb.Item>
-            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.ADMIN_LIST}>管理</a></Breadcrumb.Item>
+            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.ADMIN_MAIN}>模板管理</a></Breadcrumb.Item>
+            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.ADMIN_LIST}>列表</a></Breadcrumb.Item>
           </Breadcrumb>
           <div className={commonStyles.pageBackground}>
             <div className={commonStyles.page}>
@@ -220,6 +244,7 @@ class AdminSchemaListPage extends Component {
         uid: val.uid,
         gid: val.gid,
         sid: val.sid,
+        owl: val.owl,
         sname: val.sname,
         status: val.status + '',
         updated: new Date(val.updated),

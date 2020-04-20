@@ -84,4 +84,19 @@ SchemaService.uploadCsvResource = async (formData, sid, gid) => {
   return await response.json();
 };
 
+SchemaService.getSchemaBases = async () => {
+  const response = await fetch(`${defaultUrlPrefix}/schema/schemabase`, {
+    method: 'GET',
+    credentials: 'include',
+  });
+  if (!response.ok) {
+    message.error(JSON.stringify({
+      url: response.url,
+      status: response.status,
+    }));
+    return null;
+  }
+  return await response.json();
+};
+
 export default SchemaService;

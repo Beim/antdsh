@@ -26,6 +26,12 @@ class SchemaMainPage extends Component {
       title: "新建",
       desc: "新建模板",
     };
+    const schemaBaseCardData = {
+      href: SCHEMA_CONST.HREF.BASE + search,
+      imgSrc: '/images/menu.png',
+      title: '模板库',
+      desc: '查看模板库',
+    };
     return (
       <Layout className="layout" style={{ height: "100%" }}>
         <MenuHeader defaultSelectedKey="2" />
@@ -41,6 +47,7 @@ class SchemaMainPage extends Component {
                   <div>
                     <CommonProductCard data={listSchemaCardData} />
                     <CommonProductCard data={newSchemaCardData} />
+                    <CommonProductCard data={schemaBaseCardData} />
                   </div>
                 </div>
               </div>

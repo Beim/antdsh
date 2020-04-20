@@ -1,4 +1,5 @@
 import appconfig from '../../appconfig';
+import {message} from "antd";
 
 const defaultUrlPrefix = appconfig['defaultServer']['host'];
 const AdminSchemaService = {};
@@ -45,6 +46,36 @@ AdminSchemaService.updateMatchTable = async (matchtable) => {
     })
   });
   return response;
+};
+
+AdminSchemaService.postSchemaBase = async (sid) => {
+  const response = await fetch(`${defaultUrlPrefix}/admin/schema/schemabase?sid=${sid}`, {
+    method: 'POST',
+    credentials: 'include',
+  });
+  if (!response.ok) {
+    message.error(JSON.stringify({
+      url: response.url,
+      status: response.status,
+    }));
+    return null;
+  }
+  return await response.json();
+};
+
+AdminSchemaService.deleteSchemaBase = async (sid) => {
+  const response = await fetch(`${defaultUrlPrefix}/admin/schema/schemabase?sid=${sid}`, {
+    method: 'DELETE',
+    credentials: 'include',
+  });
+  if (!response.ok) {
+    message.error(JSON.stringify({
+      url: response.url,
+      status: response.status,
+    }));
+    return null;
+  }
+  return await response.json();
 };
 
 export default AdminSchemaService;

@@ -5,9 +5,11 @@ const SCHEMA_CONST = {
     NEW: '/schema/new',
     EDIT: '/schema/edit',
     VIEW: '/schema/view',
+    BASE: '/schema/base',
     ADMIN_MAIN: '/schema/admin',
     ADMIN_LIST: '/schema/admin/list',
     ADMIN_VERIFY: '/schema/admin/verify',
+    ADMIN_BASE: '/schema/admin/base',
   },
 };
 
