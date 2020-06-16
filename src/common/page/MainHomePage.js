@@ -186,7 +186,7 @@ class MainHomePage extends Component {
     const { newGspaceName } = this.state;
     const response = await mainPageService.applyGspace(newGspaceName);
     if (response !== null && !response.succ) {
-      message.info(JSON.stringify(response));
+      message.info("图空间名非法");
     }
     this.setState({
       homeData: await this.renderHomeData(),
