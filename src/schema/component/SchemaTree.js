@@ -218,8 +218,8 @@ class SchemaTree extends Component {
     if (newObjectPropertyUri === '#' || newObjectPropertyDomainUri === '#' || newORangeUri === '#') {
       return message.info('值不能为空')
     }
-    if (relativeUris[TYPES.CLASS].has(newObjectPropertyUri)
-      || relativeUris[TYPES.DATATYPE_PROPERTY].has(newObjectPropertyUri)) {
+    if (relativeUris[TYPES.CLASS].has(newObjectPropertyUri.toLowerCase())
+      || relativeUris[TYPES.DATATYPE_PROPERTY].has(newObjectPropertyUri.toLowerCase())) {
       return message.info(`${newObjectPropertyUri} 已存在`);
     }
     if (!this.addPropertyToSchemaJson(newObjectPropertyUri, newObjectPropertyDomainUri, KEYS.OBJECT_PROPERTY, schemaJson))
@@ -255,8 +255,8 @@ class SchemaTree extends Component {
     if (newDatatypePropertyUri === '#' || newDatatypePropertyDomainUri === '#' || newDRangeUri === 'xsd:') {
       return message.info('值不能为空')
     }
-    if (relativeUris[TYPES.OBJECT_PROPERTY].has(newDatatypePropertyUri)
-      || relativeUris[TYPES.CLASS].has(newDatatypePropertyUri)) {
+    if (relativeUris[TYPES.OBJECT_PROPERTY].has(newDatatypePropertyUri.toLowerCase())
+      || relativeUris[TYPES.CLASS].has(newDatatypePropertyUri.toLowerCase())) {
       return message.info(`${newDatatypePropertyUri} 已存在`);
     }
     if (!this.addPropertyToSchemaJson(newDatatypePropertyUri, newDatatypePropertyDomainUri, KEYS.DATATYPE_PROPERTY, schemaJson))
@@ -314,8 +314,8 @@ class SchemaTree extends Component {
     if (newClassUri in schemaJson) {
       return message.info(`${newClassUri} 已存在`);
     }
-    if (relativeUris[TYPES.OBJECT_PROPERTY].has(newClassUri)
-      || relativeUris[TYPES.DATATYPE_PROPERTY].has(newClassUri)) {
+    if (relativeUris[TYPES.OBJECT_PROPERTY].has(newClassUri.toLowerCase())
+      || relativeUris[TYPES.DATATYPE_PROPERTY].has(newClassUri.toLowerCase())) {
       return message.info(`${newClassUri} 已存在`);
     }
     schemaJson[newClassUri] = {};
@@ -438,7 +438,7 @@ class SchemaTree extends Component {
     }
     owl[KEYS.GRAPH].forEach((item, idx) => {
       const relativeUri = retrieveRelativeUri(item[KEYS.ID]);
-      uris[item[KEYS.TYPE]].add(relativeUri);
+      uris[item[KEYS.TYPE]].add(relativeUri.toLowerCase());
     });
     return uris;
   }
