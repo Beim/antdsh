@@ -29,7 +29,7 @@ class MenuHeader extends Component {
             >
               <Menu.Item key="1">Sh V1.1</Menu.Item>
               <Menu.Item key="api">API</Menu.Item>
-              <Menu.Item key="console">控制台</Menu.Item>
+              <Menu.Item key="console">Console</Menu.Item>
             </Menu>
           </Col>
           <Col span={4}>

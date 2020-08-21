@@ -16,7 +16,7 @@ class DataUsageTable extends Component {
     const { data } = this.props;
     const columns = [
       {
-        title: '图空间名',
+        title: 'Graph space',
         dataIndex: 'name',
         render: (text, record) => {
           return text;
@@ -30,18 +30,18 @@ class DataUsageTable extends Component {
         }
       },
       {
-        title: '节点数量',
+        title: 'Nodes',
         dataIndex: 'nodeCount',
         render: (text, record) => {
           return text;
         }
       },
       {
-        title: '操作',
+        title: 'Action',
         dataIndex: 'id',
         render: (text, record) => {
           return (
-            <a onClick={this.confirmDeleteGspace.bind(this, text)}>删除图空间</a>
+            <a onClick={this.confirmDeleteGspace.bind(this, text)}>delete</a>
           )
         }
       }
@@ -55,8 +55,8 @@ class DataUsageTable extends Component {
 
   confirmDeleteGspace = (gid) => {
     return confirm({
-      title: '删除图空间',
-      content: '是否确认删除图空间？',
+      title: 'delete',
+      content: 'Are you going to delete this graph space?',
       onOk: async () => {
         await consolePageService.removeGspace(gid);
         this.props.refresh();
@@ -81,21 +81,21 @@ class CalcUsageTable extends Component {
     }
     const columns = [
       {
-        title: '服务名',
+        title: 'Service name',
         dataIndex: 'serviceName',
         render: (text, record) => {
           return text;
         }
       },
       {
-        title: '调用次数',
+        title: 'call',
         dataIndex: 'count',
         render: (text, record) => {
           return text;
         }
       },
       {
-        title: '调用时间(s)',
+        title: 'duration(s)',
         dataIndex: 'duration',
         render: (text, record) => {
           return text;
@@ -140,8 +140,8 @@ class UserConsolePage extends Component {
 
         <Content style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item><a href={"/main/home"}>首页</a></Breadcrumb.Item>
-            <Breadcrumb.Item>控制台</Breadcrumb.Item>
+            <Breadcrumb.Item><a href={"/main/home"}>Main</a></Breadcrumb.Item>
+            <Breadcrumb.Item>Console</Breadcrumb.Item>
           </Breadcrumb>
           <div className={commonStyles.pageBackground}>
             <div className={commonStyles.page}>
@@ -149,14 +149,14 @@ class UserConsolePage extends Component {
 
                 <div className={commonStyles.card}>
                   <div>
-                    <div className={commonStyles.cardTitle}>图空间列表</div>
+                    <div className={commonStyles.cardTitle}>Gspace List</div>
                     <DataUsageTable data={gspaceInfoList} refresh={this.fetchDataAndSetState.bind(this)}></DataUsageTable>
                   </div>
                 </div>
 
                 <div className={commonStyles.card}>
                   <div>
-                    <div className={commonStyles.cardTitle}>服务统计</div>
+                    <div className={commonStyles.cardTitle}>Service Statistic</div>
                     <div>
                       <CalcUsageTable data={serviceMonitorInfo}></CalcUsageTable>
                     </div>

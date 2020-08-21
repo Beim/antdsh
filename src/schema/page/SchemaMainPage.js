@@ -17,33 +17,33 @@ class SchemaMainPage extends Component {
     const listSchemaCardData = {
       href: SCHEMA_CONST.HREF.LIST + search,
       imgSrc: "/images/menu.png",
-      title: "列表",
-      desc: "查看模板列表",
+      title: "Schema list",
+      desc: "View schema list",
     };
     const newSchemaCardData = {
       href: SCHEMA_CONST.HREF.NEW + search,
       imgSrc: "/images/plus.png",
-      title: "新建",
-      desc: "新建模板",
+      title: "New schema",
+      desc: "Create new schema",
     };
     const schemaBaseCardData = {
       href: SCHEMA_CONST.HREF.BASE + search,
       imgSrc: '/images/menu.png',
-      title: '模板库',
-      desc: '查看模板库',
+      title: 'Schema base',
+      desc: 'View schema base',
     };
     return (
       <Layout className="layout" style={{ height: "100%" }}>
         <MenuHeader defaultSelectedKey="2" />
         <Content style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>模板</Breadcrumb.Item>
+            <Breadcrumb.Item>Schema</Breadcrumb.Item>
           </Breadcrumb>
           <div className={commonStyles.pageBackground}>
             <div className={commonStyles.page}>
               <div className={commonStyles.content}>
                 <div className={commonStyles.card}>
-                  <div className={commonStyles.cardTitle}>模板</div>
+                  <div className={commonStyles.cardTitle}>Schema</div>
                   <div>
                     <CommonProductCard data={listSchemaCardData} />
                     <CommonProductCard data={newSchemaCardData} />

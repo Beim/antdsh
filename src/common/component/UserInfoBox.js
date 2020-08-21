@@ -27,17 +27,17 @@ class UserInfoBox extends Component {
     if (!isLoggedIn) {
       return (
         <div style={{color: 'white'}}>
-          <a href={`/user/login`}>登录</a>
+          <a href={`/user/login`}>Sign in</a>
           /
-          <a href={'/user/register'}>注册</a>
+          <a href={'/user/register'}>Sign up</a>
         </div>
       )
     }
     else {
       return (
         <div style={{color: 'white'}}>
-          您以 <a onClick={this.handleUserInfo}>{username}</a> 登录
-          (<a onClick={this.logout}>退出</a>)
+          Login as <a onClick={this.handleUserInfo}>{username}</a>, 
+          (<a onClick={this.logout}>logout</a>)
         </div>
       )
     }
@@ -74,7 +74,7 @@ class UserInfoBox extends Component {
     const results = await response.json();
     if (results.code !== RESULT.DEFAULT_SUCC_CODE) {
       if (results.code === CODES.UNAUTHEN) {
-        console.info('用户未登录');
+        console.info('Needs to login');
         window.location.href = '/user/login';
       }
       else {

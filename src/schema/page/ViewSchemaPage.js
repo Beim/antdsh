@@ -49,7 +49,7 @@ class ResourceUpload extends Component {
       <div>
         <Upload {...props}>
           <Button>
-            选择文件
+            Select file
           </Button>
         </Upload>
         <Button
@@ -59,7 +59,7 @@ class ResourceUpload extends Component {
           loading={uploading}
           style={{ marginTop: 16 }}
         >
-          { uploading ? '上传中' : '开始上传' }
+          { uploading ? 'Uploading' : 'Upload' }
         </Button>
       </div>
     )
@@ -81,12 +81,12 @@ class ResourceUpload extends Component {
         fileList: [],
         uploading: false,
       });
-      message.success("上传成功");
+      message.success("Upload succeed");
     } else {
       this.setState({
         uploading: false,
       });
-      message.error("上传失败");
+      message.error("Upload failed");
     }
   }
 }
@@ -119,15 +119,15 @@ class ViewSchemaPage extends Component {
         <MenuHeader defaultSelectedKey="2" />
         <Content style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.MAIN + `?gid=${this.state.gid}`}>模板</a></Breadcrumb.Item>
-            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.LIST + `?gid=${this.state.gid}`}>列表</a></Breadcrumb.Item>
-            <Breadcrumb.Item>查看</Breadcrumb.Item>
+            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.MAIN + `?gid=${this.state.gid}`}>Schema</a></Breadcrumb.Item>
+            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.LIST + `?gid=${this.state.gid}`}>List</a></Breadcrumb.Item>
+            <Breadcrumb.Item>View</Breadcrumb.Item>
           </Breadcrumb>
           <div className={commonStyles.pageBackground}>
             <div className={commonStyles.page}>
               <div className={commonStyles.content}>
                 <div className={commonStyles.card}>
-                  <span style={{fontSize: "18px"}}>{`模板名:  ${this.state.sname}`}</span>
+                  <span style={{fontSize: "18px"}}>{`Schema name:  ${this.state.sname}`}</span>
                 </div>
                 <div className={commonStyles.card}>
                   <Row>
@@ -187,7 +187,7 @@ class ViewSchemaPage extends Component {
       }
     }
     const prevewJsonStr = JSON.stringify(previewJson, null ,4);
-    let previewStr = `**资源上传接口** \`[POST] ${APP_CONFIG.defaultServer.host}/resource/user/new\` \n\n**资源上传格式预览** \n\n`;
+    let previewStr = `**New resource API** \`[POST] ${APP_CONFIG.defaultServer.host}/resource/user/new\` \n\n**New resource request preview** \n\n`;
     previewStr += "```\n" + prevewJsonStr + "\n```";
     return { __html: md.render(previewStr) };
   };

@@ -97,8 +97,8 @@ class MainDetailPage extends Component {
     if (productDetailData) {
       return (
         <Breadcrumb style={{ margin: '16px 0' }}>
-          <Breadcrumb.Item>首页</Breadcrumb.Item>
-          <Breadcrumb.Item>详情</Breadcrumb.Item>
+          <Breadcrumb.Item>Main</Breadcrumb.Item>
+          <Breadcrumb.Item>Detail</Breadcrumb.Item>
           <Breadcrumb.Item>{productDetailData.title}</Breadcrumb.Item>
         </Breadcrumb>
       )

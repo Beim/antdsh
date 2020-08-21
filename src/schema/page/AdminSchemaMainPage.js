@@ -14,27 +14,27 @@ class AdminSchemaMainPage extends Component {
     const listSchemaCardData = {
       href: SCHEMA_CONST.HREF.ADMIN_LIST,
       imgSrc: "/images/menu.png",
-      title: "列表",
-      desc: "查看模板列表",
+      title: "List",
+      desc: "Schema list",
     };
     const schemaBaseCardData = {
       href: SCHEMA_CONST.HREF.ADMIN_BASE,
       imgSrc: "/images/menu.png",
-      title: "模板库",
-      desc: "管理模板库",
+      title: "Base",
+      desc: "Schema base",
     };
     return (
       <Layout className="layout" style={{ height: "100%" }}>
         <MenuHeader defaultSelectedKey="2" />
         <Content style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>模板管理</Breadcrumb.Item>
+            <Breadcrumb.Item>Schema manage</Breadcrumb.Item>
           </Breadcrumb>
           <div className={commonStyles.pageBackground}>
             <div className={commonStyles.page}>
               <div className={commonStyles.content}>
                 <div className={commonStyles.card}>
-                  <div className={commonStyles.cardTitle}>模板管理</div>
+                  <div className={commonStyles.cardTitle}>Schema manage</div>
                   <div>
                     <CommonProductCard data={listSchemaCardData} />
                     <CommonProductCard data={schemaBaseCardData} />

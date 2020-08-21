@@ -30,23 +30,23 @@ class EmbeddingListTable extends Component {
   render() {
     const columns = [
       {
-        title: '图空间',
+        title: 'Gspace',
         dataIndex: 'gid',
       },
       {
-        title: '模型',
+        title: 'Schema',
         dataIndex: 'modelname',
       },
       {
-        title: '状态',
+        title: 'Status',
         dataIndex: 'status',
       },
       {
-        title: '更新时间',
+        title: 'Updated',
         dataIndex: 'updated',
       },
       {
-        title: '操作',
+        title: 'Action',
         dataIndex: 'action',
         render: this.renderAction,
       }
@@ -67,12 +67,12 @@ class EmbeddingListTable extends Component {
     if (status === STATUS.trained) {
       return (
         <span>
-          <a onClick={this.showApiModal.bind(this, gid, modelname)}>查看接口</a>
+          <a onClick={this.showApiModal.bind(this, gid, modelname)}>View API</a>
           <span> | </span>
           {/*TODO 重新训练也需要选择服务节点 */}
-          <a onClick={this.showServiceModal.bind(this, gid, modelname)}>重新训练</a>
+          <a onClick={this.showServiceModal.bind(this, gid, modelname)}>Retrain</a>
           <span> | </span>
-          <a onClick={this.exportParam.bind(this, gid, modelname)}>导出参数</a>
+          <a onClick={this.exportParam.bind(this, gid, modelname)}>Export</a>
         </span>
       )
     } else if (status === STATUS.training) {
@@ -84,7 +84,7 @@ class EmbeddingListTable extends Component {
     } else if (status === STATUS.untrained) {
       return (
         <span>
-          <a onClick={this.showServiceModal.bind(this, gid, modelname)}>选择服务</a>
+          <a onClick={this.showServiceModal.bind(this, gid, modelname)}>Choose service</a>
         </span>
       )
     } else if (status === STATUS.queued) {
@@ -113,7 +113,7 @@ class EmbeddingListTable extends Component {
     if (!response.succ) {
       message.error(JSON.stringify(response));
     }
-    message.success('已提交训练任务');
+    message.success('succeed');
     this.setState({
       'serviceModalVisible': false,
     });
@@ -385,21 +385,21 @@ class EmbeddingListTable extends Component {
         title: 'gpu',
         dataIndex: 'gpu',
         render: (text, record) => {
-          return <span>{text == true ? '是' : '否'}</span>
+          return <span>{text == true ? 'yes' : 'no'}</span>
         }
       },
       {
-        title: '可用',
+        title: 'available',
         dataIndex: 'available',
         render: (text, record) => {
-          return <span>{text == true ? '是' : '否'}</span>
+          return <span>{text == true ? 'yes' : 'no'}</span>
         }
       },
       {
-        title: '操作',
+        title: 'action',
         dataIndex: 'action',
         render: (text, record) => {
-          return <a onClick={this.postTrainJob.bind(this, selectedTrainGid, selectedTrainModelName, record['serviceId'])}>训练</a>
+          return <a onClick={this.postTrainJob.bind(this, selectedTrainGid, selectedTrainModelName, record['serviceId'])}>train</a>
         }
       }
     ];
@@ -414,7 +414,7 @@ class EmbeddingListTable extends Component {
     }
     return (
       <Modal
-        title={"选择服务"}
+        title={"choose service"}
         visible={this.state.serviceModalVisible}
         onOk={this.handleServiceModalCancle}
         onCancel={this.handleServiceModalCancle}
@@ -450,14 +450,14 @@ class EmbeddingListPage extends Component {
         <MenuHeader defaultSelectedKey="2" />
         <Content style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item><a href={`/`}>首页</a></Breadcrumb.Item>
-            <Breadcrumb.Item>图嵌入</Breadcrumb.Item>
+            <Breadcrumb.Item><a href={`/`}>Main</a></Breadcrumb.Item>
+            <Breadcrumb.Item>Graph embedding</Breadcrumb.Item>
           </Breadcrumb>
           <div className={commonStyles.pageBackground}>
             <div className={commonStyles.page}>
               <div className={commonStyles.content}>
                 <div className={commonStyles.card}>
-                  <span style={{fontSize: "18px"}}>{`图嵌入`}</span>
+                  <span style={{fontSize: "18px"}}>{`Graph embedding`}</span>
                 </div>
                 <div className={commonStyles.card}>
                   <EmbeddingListTable data={modelsInfo} updateData={this.setModelsInfo.bind(this, gid)} />

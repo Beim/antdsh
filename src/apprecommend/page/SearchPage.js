@@ -31,7 +31,7 @@ class SearchPage extends Component {
         <MenuHeader defaultSelectedKey="1" />
         <Content style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item><a href={"/main/home"}>首页</a></Breadcrumb.Item>
+            <Breadcrumb.Item><a href={"/main/home"}>Main</a></Breadcrumb.Item>
             <Breadcrumb.Item><a href={"/app/search"}>外部服务变化感知器</a></Breadcrumb.Item>
           </Breadcrumb>
           <div style={{ background: '#f0f2f5', padding: 24, height: '100%' }}>

@@ -26,7 +26,7 @@ class LoginChecker extends Component {
     const results = await response.json();
     if (results.code !== RESULT.DEFAULT_SUCC_CODE) {
       if (results.code === CODES.UNAUTHEN) {
-        message.info('用户未登录');
+        message.info('Needs login');
       }
       else {
         message.error(JSON.stringify(results));

@@ -31,9 +31,9 @@ class NormalLoginForm extends Component {
         </FormItem>
         <FormItem>
           <Button type="primary" htmlType="submit" className="login-form-button">
-            登录
+            Sign in
           </Button>
-          Or <a href={this.props.registerHref}>立即注册</a>
+          Or <a href={this.props.registerHref}>Sign up</a>
         </FormItem>
       </Form>
     )

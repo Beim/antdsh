@@ -16,7 +16,7 @@ class SchemaInfoTabel extends Component {
   render() {
     const columns = [
       {
-        title: '模板名',
+        title: 'Schema name',
         dataIndex: 'sname',
         key: 'sname',
         sorter: (a, b) => {
@@ -26,14 +26,14 @@ class SchemaInfoTabel extends Component {
         }
       },
       {
-        title: '更新时间',
+        title: 'Updated',
         dataIndex: 'updated',
         key: 'updated',
         sorter: (a, b) => b.updated - a.updated,
         render: (text, record) => text.toLocaleDateString(),
       },
       {
-        title: '操作',
+        title: 'Action',
         dataIndex: 'sid',
         key: 'action',
         render: (text, record) => {
@@ -42,9 +42,9 @@ class SchemaInfoTabel extends Component {
           console.log(owl);
           return (
             <span>
-              <a onClick={this.viewSchemaBase.bind(this, owl)}>查看</a>
+              <a onClick={this.viewSchemaBase.bind(this, owl)}>View</a>
               <span> | </span>
-              <a onClick={this.deleteSchemaBase.bind(this, sid)}>删除</a>
+              <a onClick={this.deleteSchemaBase.bind(this, sid)}>Delete</a>
             </span>
           )
         },
@@ -58,7 +58,7 @@ class SchemaInfoTabel extends Component {
 
   viewSchemaBase = async (owl) => {
     return confirm({
-      title: '查看模板',
+      title: 'View schema',
       content: <SchemaTree
         schemaOwl={owl}
         editable={false}
@@ -75,16 +75,16 @@ class SchemaInfoTabel extends Component {
 
   deleteSchemaBase = (sid) => {
     return confirm({
-      title: '删除模板',
-      content: '是否确认删除模板',
+      title: 'Delete schema',
+      content: 'Delete schema?',
       onOk: async () => {
         const result = await adminSchemaService.deleteSchemaBase(sid);
         if (result.succ) {
-          message.success("删除成功");
+          message.success("Succeed");
           this.props.updateData();
         }
         else {
-          message.error(`删除失败: ${JSON.stringify(result)}`);
+          message.error(`Failed: ${JSON.stringify(result)}`);
         }
       },
       onCancel() {},
@@ -112,8 +112,8 @@ class AdminSchemaBasePage extends Component {
         <MenuHeader defaultSelectedKey="2" />
         <Content style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.ADMIN_MAIN}>模板管理</a></Breadcrumb.Item>
-            <Breadcrumb.Item>模板库</Breadcrumb.Item>
+            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.ADMIN_MAIN}>Schema manage</a></Breadcrumb.Item>
+            <Breadcrumb.Item>Schema base</Breadcrumb.Item>
           </Breadcrumb>
           <div className={commonStyles.pageBackground}>
             <div className={commonStyles.page}>

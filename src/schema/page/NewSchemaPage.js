@@ -112,15 +112,15 @@ class NewSchemaPage extends Component {
         <MenuHeader defaultSelectedKey="2" />
         <Content style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.MAIN + `?gid=${this.state.gid}`}>模板</a></Breadcrumb.Item>
-            <Breadcrumb.Item>添加</Breadcrumb.Item>
+            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.MAIN + `?gid=${this.state.gid}`}>Schema</a></Breadcrumb.Item>
+            <Breadcrumb.Item>Add</Breadcrumb.Item>
           </Breadcrumb>
           <div className={commonStyles.pageBackground}>
             <div className={commonStyles.page}>
               <div className={commonStyles.content}>
                 <div className={commonStyles.card}>
-                  <span style={{fontSize: "18px"}}>模板名:&nbsp;</span>
-                  <Input placeholder={"请输入模板名"}
+                  <span style={{fontSize: "18px"}}>Schema name:&nbsp;</span>
+                  <Input placeholder={"name"}
                          name={"sname"}
                          value={this.state.sname}
                          style={{
@@ -128,7 +128,7 @@ class NewSchemaPage extends Component {
                          }}
                          onChange={this.handleInputChange} >
                   </Input>
-                  <Button onClick={this.handleSave} style={{marginLeft: '10px'}}>保存</Button>
+                  <Button onClick={this.handleSave} style={{marginLeft: '10px'}}>Save</Button>
                 </div>
                 {/* json -> view, json -> JSON-LD */}
                 <div className={commonStyles.card}>
@@ -159,10 +159,10 @@ class NewSchemaPage extends Component {
   handleSave = async () => {
     const { owl, sname, gid } = this.state;
     if (owl === undefined) {
-      return message.info('请添加类');
+      return message.info('Please add class');
     };
     if (sname === "") {
-      return message.info("请输入模板名");
+      return message.info("Schema name can't be empty");
     }
     const response = await schemaService.newSchema(gid, owl, "JSON-LD", sname);
     if (!response.ok) {
@@ -172,7 +172,7 @@ class NewSchemaPage extends Component {
     if (results.code !== RESULT.DEFAULT_SUCC_CODE) {
       return message.error(JSON.stringify(results));
     }
-    message.success('已保存');
+    message.success('Saved');
     setTimeout(() => {
       window.location = SCHEMA_CONST.HREF.LIST + window.location.search;
     }, 1000);

@@ -51,7 +51,7 @@ class EditSchemaPage extends Component {
     const {owl, sname, gid} = this.state;
     console.log('owl: ', owl);
     if (owl === undefined) {
-      return message.info('请添加类');
+      return message.info('Please add class');
     };
     const response = await schemaService.editSchema(gid, owl, "JSON-LD", sname);
     if (!response.ok) {
@@ -61,7 +61,7 @@ class EditSchemaPage extends Component {
     if (results.code !== RESULT.DEFAULT_SUCC_CODE) {
       return message.error(JSON.stringify(results));
     }
-    message.success('已保存');
+    message.success('Saved');
     // 跳转list 页面
     // setTimeout(() => {
     //   window.location = SCHEMA_CONST.HREF.LIST + window.location.search;
@@ -74,16 +74,16 @@ class EditSchemaPage extends Component {
         <MenuHeader defaultSelectedKey="2" />
         <Content style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.MAIN + `?gid=${this.state.gid}`}>模板</a></Breadcrumb.Item>
-            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.LIST + `?gid=${this.state.gid}`}>列表</a></Breadcrumb.Item>
-            <Breadcrumb.Item>编辑</Breadcrumb.Item>
+            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.MAIN + `?gid=${this.state.gid}`}>Schema</a></Breadcrumb.Item>
+            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.LIST + `?gid=${this.state.gid}`}>List</a></Breadcrumb.Item>
+            <Breadcrumb.Item>Edit</Breadcrumb.Item>
           </Breadcrumb>
           <div className={commonStyles.pageBackground}>
             <div className={commonStyles.page}>
               <div className={commonStyles.content}>
                 <div className={commonStyles.card}>
-                  <span style={{fontSize: "18px"}}>{`模板名:  ${this.state.sname}`}</span>
-                  <Button onClick={this.handleSave} style={{marginLeft: '10px'}}>保存</Button>
+                  <span style={{fontSize: "18px"}}>{`Schema name:  ${this.state.sname}`}</span>
+                  <Button onClick={this.handleSave} style={{marginLeft: '10px'}}>Save</Button>
                 </div>
                 <div className={commonStyles.card}>
                   <SchemaTree schemaOwl={this.state.owl} editable={true} submitOwl={this.handleOwlChange} ></SchemaTree>

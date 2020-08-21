@@ -91,7 +91,7 @@ class SchemaTree extends Component {
           showLine={true}
         >
           {classTreeNodes}
-          {(() => this.state.editBtnVisible ? <TreeNode title={<Button onClick={this.showNewClassModal}>添加类</Button>}></TreeNode> : <div />)()}
+          {(() => this.state.editBtnVisible ? <TreeNode title={<Button onClick={this.showNewClassModal}>Add class</Button>}></TreeNode> : <div />)()}
 
         </Tree>
         {this.renderNewClassModal()}
@@ -128,7 +128,7 @@ class SchemaTree extends Component {
     const newOPropertyUri = this.state.newOPropertyUri ? this.state.newOPropertyUri.trim() : '#';
     const newORangeUri = this.state.newORangeUri ? this.state.newORangeUri.trim() : '#';
     if (newORangeDomainUri === '#' || newOPropertyUri === '#' || newORangeUri === '#') {
-      return message.info('值不能为空')
+      return message.info('Value can\'t be empty')
     }
     if (!this.addPropRangeToSchemaJson(newORangeDomainUri, newOPropertyUri, newORangeUri, KEYS.OBJECT_PROPERTY, schemaJson))
       return;
@@ -154,7 +154,7 @@ class SchemaTree extends Component {
    */
   addPropRangeToSchemaJson = (domainUri, propUri, rangeUri, propType, schemaJson) => {
     if (propType === KEYS.OBJECT_PROPERTY && !(rangeUri in schemaJson)) {
-      message.info(`请先添加类${rangeUri}`);
+      message.info(`Please add class ${rangeUri} first`);
       return false
     }
     const propObj = schemaJson[domainUri][propType][propUri];
@@ -163,7 +163,7 @@ class SchemaTree extends Component {
     }
     else {
       if (propObj['range'].includes(rangeUri)) {
-        message.info(`取值范围${rangeUri} 已存在`)
+        message.info(`Range ${rangeUri} exists`)
         return false;
       }
       propObj['range'].push(rangeUri);
@@ -185,7 +185,7 @@ class SchemaTree extends Component {
     const newDPropertyUri = this.state.newDPropertyUri ? this.state.newDPropertyUri.trim() : '#';
     const newDRangeUri = this.state.newDRangeUri ? this.state.newDRangeUri.trim() : 'xsd:';
     if (newDRangeDomainUri === '#' || newDPropertyUri === '#' || newDRangeUri === 'xsd:') {
-      return message.info('值不能为空')
+      return message.info('Value can\'t be empty')
     }
     if (!this.addPropRangeToSchemaJson(newDRangeDomainUri, newDPropertyUri, newDRangeUri, KEYS.DATATYPE_PROPERTY, schemaJson))
       return;
@@ -216,11 +216,11 @@ class SchemaTree extends Component {
     const schemaJson = JSON.parse(JSON.stringify(this.state.schemaJson));
     const relativeUris = this.state.relativeUris;
     if (newObjectPropertyUri === '#' || newObjectPropertyDomainUri === '#' || newORangeUri === '#') {
-      return message.info('值不能为空')
+      return message.info('Value can\'t be empty')
     }
     if (relativeUris[TYPES.CLASS].has(newObjectPropertyUri.toLowerCase())
       || relativeUris[TYPES.DATATYPE_PROPERTY].has(newObjectPropertyUri.toLowerCase())) {
-      return message.info(`${newObjectPropertyUri} 已存在`);
+      return message.info(`${newObjectPropertyUri} exists`);
     }
     if (!this.addPropertyToSchemaJson(newObjectPropertyUri, newObjectPropertyDomainUri, KEYS.OBJECT_PROPERTY, schemaJson))
       return;
@@ -253,11 +253,11 @@ class SchemaTree extends Component {
     const schemaJson = JSON.parse(JSON.stringify(this.state.schemaJson));
     const relativeUris = this.state.relativeUris;
     if (newDatatypePropertyUri === '#' || newDatatypePropertyDomainUri === '#' || newDRangeUri === 'xsd:') {
-      return message.info('值不能为空')
+      return message.info('Value can\'t be empty')
     }
     if (relativeUris[TYPES.OBJECT_PROPERTY].has(newDatatypePropertyUri.toLowerCase())
       || relativeUris[TYPES.CLASS].has(newDatatypePropertyUri.toLowerCase())) {
-      return message.info(`${newDatatypePropertyUri} 已存在`);
+      return message.info(`${newDatatypePropertyUri} exists`);
     }
     if (!this.addPropertyToSchemaJson(newDatatypePropertyUri, newDatatypePropertyDomainUri, KEYS.DATATYPE_PROPERTY, schemaJson))
       return;
@@ -290,7 +290,7 @@ class SchemaTree extends Component {
     }
     else {
       if (propUri in schemaJson[domainUri][propType]) {
-        message.info(`属性${propUri} 已存在`);
+        message.info(`Property ${propUri} exists`);
         return false;
       }
       schemaJson[domainUri][propType][propUri] = {};
@@ -309,14 +309,14 @@ class SchemaTree extends Component {
     const newClassUri = this.state.newClassUri ? this.state.newClassUri.trim() : '#';
     const relativeUris = this.state.relativeUris;
     if (newClassUri === '#') {
-      return message.info('值不能为空')
+      return message.info('Value can\'t be empty')
     }
     if (newClassUri in schemaJson) {
-      return message.info(`${newClassUri} 已存在`);
+      return message.info(`${newClassUri} exists`);
     }
     if (relativeUris[TYPES.OBJECT_PROPERTY].has(newClassUri.toLowerCase())
       || relativeUris[TYPES.DATATYPE_PROPERTY].has(newClassUri.toLowerCase())) {
-      return message.info(`${newClassUri} 已存在`);
+      return message.info(`${newClassUri} exists`);
     }
     schemaJson[newClassUri] = {};
     // 默认带有name: string 属性
@@ -684,7 +684,7 @@ class SchemaTree extends Component {
     };
     const renderPropRanges = (ranges) => {
       if (ranges === undefined) return;
-      const rangeStr = `取值范围: ${ranges.join(', ')}`;
+      const rangeStr = `Range: ${ranges.join(', ')}`;
       return <TreeNode title={getSpan(rangeStr)}></TreeNode>;
     };
     const renderDatatypeProperty = (propertyObj, classUri) => {
@@ -696,12 +696,12 @@ class SchemaTree extends Component {
           <TreeNode
             title={
               getSpan(
-                `属性: ${propUri}`,
+                `Property: ${propUri}`,
                 {'type': 'datatypeProperty', 'classUri': classUri, 'datatypeProperty': propUri})
             }
             key={`datatypeProperty${propUri}${classUri}`}>
             {renderPropRanges(propValues['range'])}
-            {(() => this.state.editBtnVisible ? <TreeNode title={getDRangeBtn('添加取值范围', classUri, propUri)}></TreeNode> : null)()}
+            {(() => this.state.editBtnVisible ? <TreeNode title={getDRangeBtn('Add range', classUri, propUri)}></TreeNode> : null)()}
           </TreeNode>
         )
       }
@@ -716,13 +716,13 @@ class SchemaTree extends Component {
           <TreeNode
             title={
               getSpan(
-                `关系: ${propUri}`,
+                `Relationship: ${propUri}`,
                 {'type': 'objectProperty', 'classUri': classUri, 'objectProperty': propUri}
               )
             }
             key={`objectProperty${propUri}${classUri}`}>
             {renderPropRanges(propValues['range'])}
-            {(() => this.state.editBtnVisible ? <TreeNode title={getORangeBtn('添加取值范围', classUri, propUri)}></TreeNode> : null)()}
+            {(() => this.state.editBtnVisible ? <TreeNode title={getORangeBtn('Range', classUri, propUri)}></TreeNode> : null)()}
           </TreeNode>
         )
       }
@@ -734,10 +734,10 @@ class SchemaTree extends Component {
         {/*{(() => this.state.editBtnVisible ? <TreeNode title={getNewSuperClassBtn('添加父类', classUri)}></TreeNode> : null)()}*/}
 
         {renderDatatypeProperty(classItem['DatatypeProperty'], classUri)}
-        {(() => this.state.editBtnVisible ? <TreeNode title={getNewDatatypePropertyBtn('添加属性', classUri)}></TreeNode> : null)()}
+        {(() => this.state.editBtnVisible ? <TreeNode title={getNewDatatypePropertyBtn('Add property', classUri)}></TreeNode> : null)()}
 
         {renderObjectProperty(classItem['ObjectProperty'], classUri)}
-        {(() => this.state.editBtnVisible ? <TreeNode title={getNewObjectPropertyBtn('添加关系', classUri)}></TreeNode> : null)()}
+        {(() => this.state.editBtnVisible ? <TreeNode title={getNewObjectPropertyBtn('Add relationship', classUri)}></TreeNode> : null)()}
 
       </TreeNode>
     )
@@ -746,12 +746,12 @@ class SchemaTree extends Component {
   renderDeleteItemModal = () => {
     return (
       <Modal
-        title={"删除节点"}
+        title={"Delete node"}
         visible={this.state.deleteItemModalVisible}
         onOk={this.handleDeleteItemModalOk}
         onCancel={this.handleDeleteItemModalCancle}
       >
-        <span>确认删除节点？</span>
+        <span>Delete node?</span>
       </Modal>
     )
   };
@@ -759,12 +759,12 @@ class SchemaTree extends Component {
   renderNewClassModal = () => {
     return (
       <Modal
-        title={"添加类"}
+        title={"Add class"}
         visible={this.state.newClassModalVisible}
         onOk={this.handleNewClassModalOk}
         onCancel={this.handleNewClassModalCancle}
       >
-        <span>类名：</span>
+        <span>Class name：</span>
         <Input value={this.state.newClassUri} name={"newClassUri"} onChange={this.handleInputChange} style={{width: '60%'}}></Input>
       </Modal>
     )
@@ -785,15 +785,15 @@ class SchemaTree extends Component {
   renderNewDataPropertyModal = () => {
     return (
       <Modal
-        title={"添加属性"}
+        title={"Add property"}
         visible={this.state.newDatatypePropertyModalVisible}
         onOk={this.handleNewDatatypePropertyModalOk}
         onCancel={this.handleNewDatatypePropertyModalCancle}
       >
-        <label className={editSchemaStyles.modalLabel}>属性</label>
+        <label className={editSchemaStyles.modalLabel}>Property</label>
         <Input value={this.state.newDatatypePropertyUri} name={"newDatatypePropertyUri"} onChange={this.handleInputChange} style={{width: '60%'}}></Input>
         <br/><br/>
-        <label className={editSchemaStyles.modalLabel}>取值范围</label>
+        <label className={editSchemaStyles.modalLabel}>Range</label>
         <Input value={this.state.newDRangeUri} name={"newDRangeUri"} onChange={this.handleInputChange} style={{width: '60%'}}></Input>
       </Modal>
     )
@@ -801,15 +801,15 @@ class SchemaTree extends Component {
   renderNewObjectPropertyModal = () => {
     return (
       <Modal
-        title={"添加关系"}
+        title={"Add relationship"}
         visible={this.state.newObjectPropertyModalVisible}
         onOk={this.handleNewObjectPropertyModalOk}
         onCancel={this.handleNewObjectPropertyModalCancle}
       >
-        <label className={editSchemaStyles.modalLabel}>关系</label>
+        <label className={editSchemaStyles.modalLabel}>Relationship</label>
         <Input value={this.state.newObjectPropertyUri} name={"newObjectPropertyUri"} onChange={this.handleInputChange} style={{width: '60%'}}></Input>
         <br/><br/>
-        <label className={editSchemaStyles.modalLabel}>取值范围</label>
+        <label className={editSchemaStyles.modalLabel}>Range</label>
         <Input value={this.state.newORangeUri} name={"newORangeUri"} onChange={this.handleInputChange} style={{width: '60%'}}></Input>
       </Modal>
     )
@@ -817,12 +817,12 @@ class SchemaTree extends Component {
   renderNewDRangeModal = () => {
     return (
       <Modal
-        title={"添加取值范围"}
+        title={"Add range"}
         visible={this.state.newDRangeModalVisible}
         onOk={this.handleNewDRangeModalOk}
         onCancel={this.handleNewDRangeModalCancle}
       >
-        <span>取值范围: </span>
+        <span>Range: </span>
         <Input value={this.state.newDRangeUri} name={"newDRangeUri"} onChange={this.handleInputChange} style={{width: '60%'}}></Input>
       </Modal>
     )
@@ -830,12 +830,12 @@ class SchemaTree extends Component {
   renderNewORangeModal = () => {
     return (
       <Modal
-        title={"添加取值范围"}
+        title={"Add range"}
         visible={this.state.newORangeModalVisible}
         onOk={this.handleNewORangeModalOk}
         onCancel={this.handleNewORangeModalCancle}
       >
-        <span>取值范围: </span>
+        <span>Range: </span>
         <Input value={this.state.newORangeUri} name={"newORangeUri"} onChange={this.handleInputChange} style={{width: '60%'}}></Input>
       </Modal>
     )

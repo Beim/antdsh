@@ -42,7 +42,7 @@ class NormalRegisterForm extends Component {
         </FormItem>
         <FormItem>
           <Button type="primary" htmlType="submit" className="login-form-button">
-            注册
+            Sign up
           </Button>
         </FormItem>
       </Form>
@@ -63,7 +63,7 @@ class NormalRegisterForm extends Component {
   checkPassword = (rule, value, callback) => {
     const form = this.props.form;
     if (value && value !== form.getFieldValue('password')) {
-      callback('两次输入密码不一致!');
+      callback('Password not same!');
     } else {
       callback();
     }

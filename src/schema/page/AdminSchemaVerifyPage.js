@@ -30,19 +30,19 @@ class MatchTable extends Component {
   render() {
     const columns = [
       {
-        title: '用户entityUri',
+        title: 'User entityUri',
         dataIndex: 'entity1Uri',
         key: 'entity1Uri',
         render: (text, record) => this.retrieveRelativeUri(text),
       },
       {
-        title: '系统entityUri',
+        title: 'System entityUri',
         dataIndex: 'entity2Uri',
         key: 'entity2Uri',
         render: (text, record) => this.retrieveRelativeUri(text),
       },
       {
-        title: '相似度',
+        title: 'Confidence',
         dataIndex: 'confidence',
         key: 'confidence',
       },
@@ -115,7 +115,7 @@ class AdminSchemaVerifyPage extends Component {
   getQuery = () => {
     let search = this.props.location.search;
     if (search === "") {
-      message.info('模板名未指定');
+      message.info('Schema name unspecified');
       return;
     }
     search = search.split('?')[1];
@@ -139,7 +139,7 @@ class AdminSchemaVerifyPage extends Component {
     if (results.code !== RESULT.DEFAULT_SUCC_CODE) {
       return message.info(results);
     }
-    message.success('已提交融合');
+    message.success('succeed');
     setTimeout(() => {
       window.location = SCHEMA_CONST.HREF.ADMIN_LIST;
     }, 1000);
@@ -165,7 +165,7 @@ class AdminSchemaVerifyPage extends Component {
     if (results.code !== RESULT.DEFAULT_SUCC_CODE) {
       return message.info(JSON.stringify(results));
     }
-    message.success('已修改匹配表');
+    message.success('Succeed');
     setTimeout(() => {
       this.setMatchTableData(this.state.sid);
     }, 1000)
@@ -188,24 +188,24 @@ class AdminSchemaVerifyPage extends Component {
         <MenuHeader defaultSelectedKey="2" />
         <Content style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.ADMIN_MAIN}>模板</a></Breadcrumb.Item>
-            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.ADMIN_LIST}>管理</a></Breadcrumb.Item>
-            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.ADMIN_VERIFY}>审核</a></Breadcrumb.Item>
+            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.ADMIN_MAIN}>Schema</a></Breadcrumb.Item>
+            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.ADMIN_LIST}>Management</a></Breadcrumb.Item>
+            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.ADMIN_VERIFY}>Audit</a></Breadcrumb.Item>
           </Breadcrumb>
           <div className={commonStyles.pageBackground}>
             <div className={commonStyles.page}>
               <div className={commonStyles.content}>
                 <div className={commonStyles.card}>
-                  <span style={{fontSize: "18px"}}>{`模板名:  ${this.state.sname}`}</span>
-                  <Button onClick={this.handleMerge} style={{marginLeft: '10px'}}>确认融合</Button>
-                  <Button onClick={this.handleChangeMatchTable} style={{marginLeft: '10px'}}>保存修改</Button>
+                  <span style={{fontSize: "18px"}}>{`Schema name:  ${this.state.sname}`}</span>
+                  <Button onClick={this.handleMerge} style={{marginLeft: '10px'}}>Confirm merge</Button>
+                  <Button onClick={this.handleChangeMatchTable} style={{marginLeft: '10px'}}>Save</Button>
                 </div>
                 <div className={commonStyles.card}>
-                  <div className={commonStyles.cardTitle}>匹配表</div>
+                  <div className={commonStyles.cardTitle}>Match table</div>
                   <MatchTable  handleSelectedRows={this.handleSelectedRows} dataSource={dataSource}></MatchTable>
                 </div>
                 <div className={commonStyles.card}>
-                  <div className={commonStyles.cardTitle}>用户模板</div>
+                  <div className={commonStyles.cardTitle}>User schema</div>
                   <SchemaTree schemaOwl={this.state.owl} editable={false} submitOwl={this.handleOwlChange} ></SchemaTree>
                 </div>
               </div>

@@ -16,7 +16,7 @@ class SchemaInfoTabel extends Component {
   render() {
     const columns = [
       {
-        title: '模板名',
+        title: 'Schema name',
         dataIndex: 'sname',
         key: 'sname',
         sorter: (a, b) => {
@@ -26,14 +26,14 @@ class SchemaInfoTabel extends Component {
         }
       },
       {
-        title: '更新时间',
+        title: 'Updated',
         dataIndex: 'updated',
         key: 'updated',
         sorter: (a, b) => b.updated - a.updated,
         render: (text, record) => text.toLocaleDateString(),
       },
       {
-        title: '操作',
+        title: 'Action',
         dataIndex: 'sid',
         key: 'action',
         render: (text, record) => {
@@ -42,9 +42,9 @@ class SchemaInfoTabel extends Component {
           console.log(owl);
           return (
             <span>
-              <a onClick={this.viewSchemaBase.bind(this, owl)}>查看</a>
+              <a onClick={this.viewSchemaBase.bind(this, owl)}>View</a>
               <span> | </span>
-              <a onClick={this.copySchemaBase.bind(this, sname, owl)}>复制</a>
+              <a onClick={this.copySchemaBase.bind(this, sname, owl)}>Copy</a>
             </span>
           )
         },
@@ -58,7 +58,7 @@ class SchemaInfoTabel extends Component {
 
   viewSchemaBase = async (owl) => {
     return confirm({
-      title: '查看模板',
+      title: 'View schema',
       content: <SchemaTree
         schemaOwl={owl}
         editable={false}
@@ -76,8 +76,8 @@ class SchemaInfoTabel extends Component {
   copySchemaBase = (sname, owl) => {
     let {gid} = commonUtil.getQuery();
     return confirm({
-      title: '复制模板',
-      content: '是否从模板库中复制该模板',
+      title: 'Copy schema',
+      content: 'Do copy schema as your own schema?',
       onOk: async () => {
         const response = await schemaService.newSchema(gid, owl, "JSON-LD", sname);
         if (!response.ok) {
@@ -85,12 +85,12 @@ class SchemaInfoTabel extends Component {
         }
         const result = await response.json();
         if (result.succ) {
-          message.success("复制成功，即将跳转");
+          message.success("succeed!");
           let { sid, sname } = result.data;
           window.location = SCHEMA_CONST.HREF.EDIT + `?sname=${sname}&sid=${sid}&gid=${gid}`;
         }
         else {
-          message.error(`复制失败: ${JSON.stringify(result)}`);
+          message.error(`failed: ${JSON.stringify(result)}`);
         }
       },
       onCancel() {},
@@ -122,8 +122,8 @@ class SchemaBasePage extends Component {
         <MenuHeader defaultSelectedKey="2" />
         <Content style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.MAIN + `?gid=${this.state.gid}`}>模板</a></Breadcrumb.Item>
-            <Breadcrumb.Item>模板库</Breadcrumb.Item>
+            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.MAIN + `?gid=${this.state.gid}`}>Schema</a></Breadcrumb.Item>
+            <Breadcrumb.Item>Base</Breadcrumb.Item>
           </Breadcrumb>
           <div className={commonStyles.pageBackground}>
             <div className={commonStyles.page}>

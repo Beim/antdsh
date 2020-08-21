@@ -14,7 +14,7 @@ class SchemaInfoTabel extends Component {
   render() {
     const columns = [
       {
-        title: '模板名',
+        title: 'Schema name',
         dataIndex: 'sname',
         key: 'sname',
         sorter: (a, b) => {
@@ -24,64 +24,64 @@ class SchemaInfoTabel extends Component {
         }
       },
       {
-        title: '用户ID',
+        title: 'User id',
         dataIndex: 'uid',
         key: 'uid',
       },
       {
-        title: '更新时间',
+        title: 'Updated',
         dataIndex: 'updated',
         key: 'updated',
         sorter: (a, b) => b.updated - a.updated,
         render: (text, record) => text.toLocaleDateString(),
       },
       {
-        title: '状态',
+        title: 'Status',
         dataIndex: 'status',
         key: 'status',
         render: (text, record) => {
           if (['0'].includes(record.status)) {
-            return '待匹配'
+            return 'To be matched'
           }
           else if (['2'].includes(record.status)) {
-            return '待审核'
+            return 'To be audited'
           }
           else if (['1', '3'].includes(record.status)) {
-            return '匹配中'
+            return 'Matching'
           }
           else if (['4'].includes(record.status)) {
-            return '已融合'
+            return 'Merged'
           }
           else if (['5'].includes(record.status)) {
-            return '待确认'
+            return 'To be confirmed'
           }
           else {
-            return '未知状态'
+            return 'Unknown'
           }
         },
         filters: [
           {
-            text: '待匹配',
+            text: 'To be matched',
             value: '待匹配',
           },
           {
-            text: '待审核',
+            text: 'To be audited',
             value: '待审核',
           },
           {
-            text: '匹配中',
+            text: 'Matching',
             value: '匹配中',
           },
           {
-            text: '已融合',
+            text: 'Merged',
             value: '已融合',
           },
           {
-            text: '待确认',
+            text: 'To be confirmed',
             value: '待确认',
           },
           {
-            text: '未知状态',
+            text: 'Unknown',
             value: '未知状态',
           },
         ],
@@ -107,7 +107,7 @@ class SchemaInfoTabel extends Component {
         },
       },
       {
-        title: '操作',
+        title: 'Action',
         dataIndex: 'action',
         key: 'action',
         render: this.renderAction,
@@ -145,7 +145,7 @@ class SchemaInfoTabel extends Component {
     if (['0', '1', '3', '4'].includes(status)) {
       return (
         <span>
-          <a href={`/schema/view?sname=${sname}&sid=${sid}&gid=${gid}`}>查看</a>
+          <a href={`/schema/view?sname=${sname}&sid=${sid}&gid=${gid}`}>View</a>
           {this.renderSaveSchemaBaseALabel(sid, owl)}
         </span>
       )
@@ -153,7 +153,7 @@ class SchemaInfoTabel extends Component {
     else if (['2'].includes(status)) {
       return (
         <span>
-          <a href={`/schema/admin/verify?sname=${sname}&sid=${sid}&gid=${gid}`}>审核</a>
+          <a href={`/schema/admin/verify?sname=${sname}&sid=${sid}&gid=${gid}`}>Audit</a>
           {this.renderSaveSchemaBaseALabel(sid, owl)}
         </span>
       )
@@ -161,7 +161,7 @@ class SchemaInfoTabel extends Component {
     else if (['5'].includes(status)) {
       return (
         <span>
-          <a href={`/schema/view?sname=${sname}&sid=${sid}&gid=${gid}`}>查看</a>
+          <a href={`/schema/view?sname=${sname}&sid=${sid}&gid=${gid}`}>View</a>
           {this.renderSaveSchemaBaseALabel(sid, owl)}
         </span>
       )
@@ -176,7 +176,7 @@ class SchemaInfoTabel extends Component {
     return (
       <span>
         <span> | </span>
-        <a onClick={this.addSchemaBase.bind(this, sid)}>保存至模板库</a>
+        <a onClick={this.addSchemaBase.bind(this, sid)}>Save</a>
       </span>
     )
   };
@@ -184,10 +184,10 @@ class SchemaInfoTabel extends Component {
   addSchemaBase = async (sid) => {
     const response = await adminSchemaService.postSchemaBase(sid);
     if (response.succ) {
-      message.success("保存成功");
+      message.success("Succeed");
     }
     else {
-      message.error(`保存失败: ${JSON.stringify(response)}`);
+      message.error(`Failed: ${JSON.stringify(response)}`);
     }
   }
 
@@ -211,8 +211,8 @@ class AdminSchemaListPage extends Component {
         <MenuHeader defaultSelectedKey="2" />
         <Content style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.ADMIN_MAIN}>模板管理</a></Breadcrumb.Item>
-            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.ADMIN_LIST}>列表</a></Breadcrumb.Item>
+            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.ADMIN_MAIN}>Schema manage</a></Breadcrumb.Item>
+            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.ADMIN_LIST}>List</a></Breadcrumb.Item>
           </Breadcrumb>
           <div className={commonStyles.pageBackground}>
             <div className={commonStyles.page}>

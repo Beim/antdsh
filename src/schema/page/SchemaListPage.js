@@ -24,7 +24,7 @@ class SchemaInfoTabel extends Component {
     if (results.code !== RESULT.DEFAULT_SUCC_CODE) {
       return message.info(JSON.stringify(results));
     }
-    message.success('已提交匹配');
+    message.success('Succeed');
     setTimeout(() => {
       this.props.updateData();
     }, 1000);
@@ -38,23 +38,23 @@ class SchemaInfoTabel extends Component {
     if (['0'].includes(record.status)) {
       return (
         <span>
-          <a href={`/schema/edit?sname=${sname}&sid=${sid}&gid=${gid}`}>修改</a>
+          <a href={`/schema/edit?sname=${sname}&sid=${sid}&gid=${gid}`}>Edit</a>
           <span> | </span>
-          <a onClick={this.confirmMatch.bind(this, sid)}>确认匹配</a>
+          <a onClick={this.confirmMatch.bind(this, sid)}>Confirm merge</a>
         </span>
       )
     }
     else if (['1', '2', '3', '4'].includes(status)) {
       return (
         <span>
-          <a href={`/schema/view?sname=${sname}&sid=${sid}&gid=${gid}`}>查看</a>
+          <a href={`/schema/view?sname=${sname}&sid=${sid}&gid=${gid}`}>View</a>
         </span>
       )
     }
     else if (['5'].includes(status)) {
       return (
         <span>
-          <a href={`/schema/view?sname=${sname}&sid=${sid}&gid=${gid}`}>查看</a>
+          <a href={`/schema/view?sname=${sname}&sid=${sid}&gid=${gid}`}>View</a>
         </span>
       )
     }
@@ -66,7 +66,7 @@ class SchemaInfoTabel extends Component {
   render() {
     const columns = [
       {
-        title: '模板名',
+        title: 'Schema name',
         dataIndex: 'sname',
         key: 'sname',
         sorter: (a, b) => {
@@ -76,52 +76,52 @@ class SchemaInfoTabel extends Component {
         }
       },
       {
-        title: '更新时间',
+        title: 'Updated',
         dataIndex: 'updated',
         key: 'updated',
         sorter: (a, b) => b.updated - a.updated,
         render: (text, record) => text.toLocaleDateString(),
       },
       {
-        title: '状态',
+        title: 'Status',
         dataIndex: 'status',
         key: 'status',
         render: (text, record) => {
           if (['0'].includes(record.status)) {
-            return '待匹配'
+            return 'To be matched'
           }
           else if (['1', '2', '3'].includes(record.status)) {
-            return '匹配中'
+            return 'Matching'
           }
           else if (['4'].includes(record.status)) {
-            return '已融合'
+            return 'Merged'
           }
           else if (['5'].includes(record.status)) {
-            return '待确认'
+            return 'To be confirmed'
           }
           else {
-            return '未知状态'
+            return 'Unknown'
           }
         },
         filters: [
           {
-            text: '待匹配',
+            text: 'To be matched',
             value: '待匹配',
           },
           {
-            text: '匹配中',
+            text: 'Matching',
             value: '匹配中',
           },
           {
-            text: '已融合',
+            text: 'Merged',
             value: '已融合',
           },
           {
-            text: '待确认',
+            text: 'To be confirmed',
             value: '待确认',
           },
           {
-            text: '未知状态',
+            text: 'Unknown',
             value: '未知状态',
           },
         ],
@@ -144,7 +144,7 @@ class SchemaInfoTabel extends Component {
         },
       },
       {
-        title: '操作',
+        title: 'Action',
         dataIndex: 'action',
         key: 'action',
         render: this.renderAction,
@@ -180,8 +180,8 @@ class SchemaListPage extends Component {
         <MenuHeader defaultSelectedKey="2" />
         <Content style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.MAIN + `?gid=${this.state.gid}`}>模板</a></Breadcrumb.Item>
-            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.LIST + `?gid=${this.state.gid}`}>列表</a></Breadcrumb.Item>
+            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.MAIN + `?gid=${this.state.gid}`}>Schema</a></Breadcrumb.Item>
+            <Breadcrumb.Item><a href={SCHEMA_CONST.HREF.LIST + `?gid=${this.state.gid}`}>List</a></Breadcrumb.Item>
           </Breadcrumb>
           <div className={commonStyles.pageBackground}>
             <div className={commonStyles.page}>

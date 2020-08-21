@@ -66,7 +66,7 @@ class MainHomePage extends Component {
         
         <Content style={{ padding: '0 50px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>首页</Breadcrumb.Item>
+            <Breadcrumb.Item>Main</Breadcrumb.Item>
           </Breadcrumb>
           <div className={commonStyles.pageBackground}>
             <div className={commonStyles.page}>
@@ -112,36 +112,36 @@ class MainHomePage extends Component {
       let neoBrowserUrl = `http://${gspaceNeoInfo['host']}:${gspaceNeoInfo['httpPort']}/browser/#boltport=${gspaceNeoInfo['boltPort']}`;
       let item = {
         cid: idx + 1,
-        label: `图空间/${gspaceName}`,
+        label: `Graph space: ${gspaceName}`,
         products: [
           {
             pid: 1,
             href: `/schema?gid=${gspaceId}`,
             imgSrc: "/images/R.png",
-            title: '模板',
-            desc: '模板',
+            title: 'Schema',
+            desc: 'Schema',
           },
           {
             pid: 2,
             href: neoBrowserUrl,
             imgSrc: "/images/M.png",
-            title: '资源',
-            desc: '资源浏览',
+            title: 'Resource',
+            desc: 'Resource',
           },
           {
             pid: 3,
             href: `/embedding?gid=${gspaceId}`,
             imgSrc: "/images/T.png",
-            title: '图嵌入',
-            desc: '训练图嵌入模型',
+            title: 'Graph Embedding',
+            desc: 'Graph Embedding',
           },
           {
             pid: 4,
             href: '/main/detail/1',
             onClick: null,
             imgSrc: "/images/T.png",
-            title: '待定',
-            desc: '该模块将在后续扩展',
+            title: 'TBD',
+            desc: 'To be determined',
           },
         ]
       };
@@ -149,15 +149,15 @@ class MainHomePage extends Component {
     }
     homeData.push({
       cid: 0,
-      label: '图空间',
+      label: 'Graph space',
       products: [
         {
           pid: 1,
           href: null,
           onClick: this.showNewGspaceModal,
           imgSrc: "/images/R.png",
-          title: '申请图空间',
-          desc: '申请图空间',
+          title: 'Apply graph space',
+          desc: 'Apply graph space',
         }
       ]
     });
@@ -171,12 +171,12 @@ class MainHomePage extends Component {
   renderNewGspaceModal = () => {
     return (
       <Modal
-        title={"申请图空间(最多可申请3个图空间)"}
+        title={"Apply graph space"}
         visible={this.state.newGspaceModalVisible}
         onOk={this.handleNewGspaceModalOk}
         onCancel={this.handleNewGspaceModalCancle}
       >
-        <span>图空间名：</span>
+        <span>Graph space name: </span>
         <Input value={this.state.newGspaceName} name={"newGspaceName"} onChange={this.handleInputChange} style={{width: '60%'}}></Input>
       </Modal>
     )
@@ -186,7 +186,7 @@ class MainHomePage extends Component {
     const { newGspaceName } = this.state;
     const response = await mainPageService.applyGspace(newGspaceName);
     if (response !== null && !response.succ) {
-      message.info("图空间名非法");
+      message.info("Invalid Graph space name");
     }
     this.setState({
       homeData: await this.renderHomeData(),
